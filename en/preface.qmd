@@ -1,8 +1,12 @@
-# Preface
+#Preface
 
-The project is now bilingual again: the Russian and English editions are separate
-Quarto books with the same chapter topology and shared assets. This is less fragile
-than trying to keep two languages inside one project definition.
+Modern experiments are practically impossible without statistical data analysis. The choice of the likelihood function, the proper treatment of background and systematic uncertainties, the construction of confidence intervals, and hypothesis testing all have a direct impact on the physical result. In experimental physics, statistics is therefore not an auxiliary topic but one of the researcher’s main working tools.
 
-The working principle is also back: theory chapters are immediately followed by
-companion notebooks with toy models, simple calculations, and placeholder analyses.
+This course is devoted precisely to those methods of statistical analysis that are genuinely needed in practice. It is based on the author’s personal experience accumulated over three decades of working with experimental data in particle physics, neutrino physics, and astrophysics. The goal here is not to cover everything that can be found in the vast literature on mathematical statistics, but rather to present what is most regularly used in real data analysis and what helps produce reliable and physically meaningful results.
+The main aim of this course is to give the reader not only a set of formulas and algorithms, but also an understanding of how to think statistically in the context of an experiment. For this reason, the book combines theoretical exposition, discussion of typical problems, and a large number of examples, including calculations and Python code in notebooks. 
+
+This format makes it possible not only to read the material, but also to reproduce key results immediately, test them on toy models, and use them as a basis for one’s own work.
+In presenting the material, I have aimed for simplicity, clarity, and practical relevance. Whenever possible, the physical meaning of the methods, their domain of applicability, typical mistakes, and limitations are discussed. Special attention is paid to the issues that students, graduate students, and early-career researchers actually encounter in the analysis of experimental data.
+This course was created within the framework of the program “Neutrino Physics and Astrophysics,” but its content is much broader and may be useful to anyone working in experimental physics and data analysis. It is intended for senior undergraduate students, graduate students, and researchers who are already familiar with the basics of probability theory, calculus, and Python programming.
+
+I hope that this course will help the reader move from a formal acquaintance with statistical methods to their confident and meaningful application in real scientific work.

@@ -2,9 +2,9 @@ project:
   type: book
 
 book:
-  title: "Статистический анализ"
-  subtitle: "Онлайн-конспект с companion notebooks"
-  author: "Дмитрий Наумов"
+  title: "Статистический анализ данных"
+  subtitle: "Теория и Практика"
+  author: "Дмитрий В.Наумов"
   chapters:
     - index.qmd
     - preface.qmd
