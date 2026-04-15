@@ -1,0 +1,34 @@
+---
+title: "Notebook: Combining Statistical and Systematic Errors"
+lang: en
+format:
+  html:
+    toc: true
+    number-sections: true
+  pdf:
+    pdf-engine: lualatex
+jupyter: python3
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+The simplest placeholder for the systematics chapter.
+
+## Error summary
+
+```{python}
+import math
+import pandas as pd
+
+value = 12.4
+stat = 0.8
+syst = 0.5
+total = math.sqrt(stat**2 + syst**2)
+
+pd.DataFrame({
+    "component": ["central value", "stat", "syst", "total"],
+    "value": [value, stat, syst, total],
+})
+```

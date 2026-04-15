@@ -1,0 +1,13 @@
+# Силлабус
+
+| Глава | Что внутри | Ноутбук |
+|---|---|---|
+| Вероятность и моменты | Ожидание, дисперсия, выборочные моменты | [probability_demo](notebooks/probability_demo.qmd) |
+| Пуассон и гаусс | Счётные модели и приближения | [poisson_gaussian_demo](notebooks/poisson_gaussian_demo.qmd) |
+| Likelihood | Логика правдоподобия | [likelihood_demo](notebooks/likelihood_demo.qmd) |
+| Fitting | Подгонка параметров | [fitting_demo](notebooks/fitting_demo.qmd) |
+| Интервалы | Confidence intervals и coverage | [intervals_demo](notebooks/intervals_demo.qmd) |
+| Feldman-Cousins | Unified intervals | [feldman_cousins_demo](notebooks/feldman_cousins_demo.qmd) |
+| Проверка гипотез | p-values, power, test statistics | [hypothesis_tests_demo](notebooks/hypothesis_tests_demo.qmd) |
+| Систематики | Nuisance parameters и covariance | [systematics_demo](notebooks/systematics_demo.qmd) |
+| Нейтринные кейсы | Toy analyses в стиле oscillation fits | [neutrino_cases_demo](notebooks/neutrino_cases_demo.qmd) |

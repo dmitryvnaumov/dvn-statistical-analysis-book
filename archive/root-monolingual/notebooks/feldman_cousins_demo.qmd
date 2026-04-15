@@ -1,0 +1,19 @@
+---
+title: "Ноутбук: интервалы Feldman-Cousins"
+lang: ru
+format:
+  html:
+    toc: true
+    number-sections: true
+  pdf:
+    pdf-engine: xelatex
+---
+
+Это пока лёгкий черновик вычислительного раздела. Здесь позже появятся:
+
+- ordering variable для пуассоновской модели;
+- построение acceptance intervals;
+- сравнение unified intervals с обычными upper limits;
+- визуализация поведения около физической границы.
+
+Сейчас файл существует как стабильная точка входа для дальнейшего наполнения.

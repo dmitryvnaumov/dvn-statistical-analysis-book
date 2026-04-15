@@ -1,0 +1,29 @@
+project:
+  type: book
+
+book:
+  title: "Статистический анализ: пилотный модуль"
+  subtitle: "Тестовая глава про моменты"
+  author: "Дмитрий Наумов"
+  chapters:
+    - index.qmd
+    - chapters/01-moments.qmd
+    - chapters/02-moments-notebook.qmd
+
+bibliography: ../shared/bib/references.bib
+lang: ru
+
+format:
+  html:
+    toc: true
+    number-sections: true
+    css: styles/book.css
+    include-in-header:
+      - ../macros/mathjax.html
+  pdf:
+    documentclass: scrbook
+    toc: true
+    number-sections: true
+    pdf-engine: xelatex
+    include-in-header:
+      - ../macros/common.tex

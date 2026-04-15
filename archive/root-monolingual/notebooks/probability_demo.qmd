@@ -1,0 +1,89 @@
+---
+title: "Ноутбук: вероятность и моменты"
+lang: ru
+format:
+  html:
+    toc: true
+    number-sections: true
+  pdf:
+    pdf-engine: xelatex
+jupyter: python3
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+Этот ноутбук продолжает вводную главу на небольшой искусственной выборке.
+Здесь мы считаем выборочное среднее, центральные моменты и несмещённую
+дисперсию.
+
+Напомним формулу для центрального момента порядка $k$:
+
+$$
+m_k = \frac{1}{n}\sum_{i=1}^{n}(x_i-\bar{x})^k.
+$$
+
+## Игрушечная выборка
+
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+x = np.array([1.2, 0.7, 1.5, 2.1, 0.9, 1.8, 1.1, 1.4])
+
+sample = pd.DataFrame(
+    {
+        "Наблюдение": np.arange(1, len(x) + 1),
+        "Значение": x,
+    }
+)
+sample
+```
+
+## Сводка по моментам
+
+```{python}
+n = len(x)
+xbar = x.mean()
+m2 = np.mean((x - xbar) ** 2)
+m3 = np.mean((x - xbar) ** 3)
+m4 = np.mean((x - xbar) ** 4)
+s2 = np.sum((x - xbar) ** 2) / (n - 1)
+
+summary = pd.DataFrame(
+    {
+        "Показатель": [
+            "Объём выборки",
+            "Среднее",
+            "Центральный момент 2-го порядка",
+            "Центральный момент 3-го порядка",
+            "Центральный момент 4-го порядка",
+            "Несмещённая дисперсия",
+        ],
+        "Обозначение": ["n", "x̄", "m₂", "m₃", "m₄", "s²"],
+        "Значение": [n, xbar, m2, m3, m4, s2],
+    }
+)
+
+summary["Значение"] = summary["Значение"].map(
+    lambda value: f"{value:.6f}" if isinstance(value, (float, np.floating)) else value
+)
+
+summary
+```
+
+## Визуализация
+
+```{python}
+fig, ax = plt.subplots(figsize=(6.5, 4.2))
+ax.hist(x, bins=5, color="#2f6c8f", edgecolor="white", linewidth=1.2)
+ax.axvline(xbar, color="#c44536", linestyle="--", linewidth=2, label=f"Среднее = {xbar:.3f}")
+ax.set_xlabel("Значение")
+ax.set_ylabel("Частота")
+ax.set_title("Игрушечная выборка")
+ax.grid(axis="y", alpha=0.25)
+ax.legend(frameon=False)
+plt.show()
+```

@@ -1,0 +1,79 @@
+# Probability and Moments
+
+The probabilistic model provides the language used later for likelihoods, fits,
+and statistical conclusions. The first chapter should therefore fix not only the
+definitions, but also the working quantities that will reappear in computations.
+
+## Random Variables and Expectation
+
+Let $X$ be a random variable with density $f(x)$, or with a probability mass
+function in the discrete case. The expectation value is the basic averaging
+operation:
+
+$$
+\E[X] = \int x f(x)\,\dd x
+$$
+
+or, in the discrete setting,
+
+$$
+\E[X] = \sum_x x\,\mathbb{P}(X=x).
+$$
+
+## Raw and Central Moments
+
+The raw moment of order $k$ is defined by
+
+$$
+\mu_k' = \E[X^k].
+$$
+
+The central moment of order $k$ is defined by
+
+$$
+\mu_k = \E[(X-\E[X])^k].
+$$
+
+In particular,
+
+$$
+\mu_1' = \E[X],
+\qquad
+\mu_2 = \Var(X).
+$$
+
+## Sample Estimators
+
+For a sample $x_1,\dots,x_n$, a natural estimator of the raw moment is
+
+$$
+m_k' = \frac{1}{n}\sum_{i=1}^{n} x_i^k,
+$$
+
+while the corresponding sample central moment can be written as
+
+$$
+m_k = \frac{1}{n}\sum_{i=1}^{n}(x_i-\bar{x})^k,
+\qquad
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i.
+$$
+
+For the variance one often uses the unbiased estimator
+
+$$
+s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2.
+$$
+
+These formulas keep coming back in toy Monte Carlo studies, fit diagnostics, and
+uncertainty checks. A classical reference point is [@cowan1998].
+
+::: {.notebook-card}
+### Companion notebook
+
+This chapter is paired with a small notebook that computes sample moments and shows
+a quick plot for a toy dataset.
+
+<div class="notebook-actions">
+  <a class="notebook-link notebook-link-primary" href="../notebooks/probability_demo.qmd">Open notebook</a>
+</div>
+:::

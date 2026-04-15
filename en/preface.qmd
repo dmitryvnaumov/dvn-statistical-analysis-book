@@ -1,0 +1,8 @@
+# Preface
+
+The project is now bilingual again: the Russian and English editions are separate
+Quarto books with the same chapter topology and shared assets. This is less fragile
+than trying to keep two languages inside one project definition.
+
+The working principle is also back: theory chapters are immediately followed by
+companion notebooks with toy models, simple calculations, and placeholder analyses.

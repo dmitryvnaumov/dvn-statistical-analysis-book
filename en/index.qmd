@@ -1,0 +1,16 @@
+---
+title: "Home"
+---
+
+This is the English edition of the bilingual online book on statistical analysis.
+Each theory chapter is paired with a companion notebook so the narrative and the
+numerical side stay close to each other.
+
+## Project layout
+
+- theory chapters live in `en/chapters/`;
+- notebooks live in `en/notebooks/`;
+- shared styles, bibliography, and PDF settings live in `shared/`;
+- the Russian edition is built in parallel from `ru/`.
+
+Start here: [Probability and Moments](chapters/probability.qmd).

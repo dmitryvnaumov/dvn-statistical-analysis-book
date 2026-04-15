@@ -1,0 +1,36 @@
+---
+title: "Notebook: A Simple Confidence Interval"
+lang: en
+format:
+  html:
+    toc: true
+    number-sections: true
+  pdf:
+    pdf-engine: lualatex
+jupyter: python3
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+A small placeholder: the normal approximation for a binomial proportion.
+
+## Wald interval
+
+```{python}
+import math
+import pandas as pd
+
+n = 120
+k = 58
+p_hat = k / n
+sigma = math.sqrt(p_hat * (1 - p_hat) / n)
+lo = p_hat - 1.96 * sigma
+hi = p_hat + 1.96 * sigma
+
+pd.DataFrame({
+    "quantity": ["p_hat", "lower bound", "upper bound"],
+    "value": [p_hat, lo, hi],
+})
+```

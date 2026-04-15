@@ -1,0 +1,27 @@
+project:
+  type: book
+
+book:
+  title: "Statistical Analysis: Pilot Module"
+  subtitle: "A test chapter on moments"
+  author: "Dmitry Naumov"
+  chapters:
+    - index.qmd
+    - chapters/01-moments.qmd
+
+bibliography: ../shared/bib/references.bib
+lang: en
+
+format:
+  html:
+    toc: true
+    number-sections: true
+    include-in-header:
+      - ../macros/mathjax.html
+  pdf:
+    documentclass: scrbook
+    toc: true
+    number-sections: true
+    pdf-engine: xelatex
+    include-in-header:
+      - ../macros/common.tex

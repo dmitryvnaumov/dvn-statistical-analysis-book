@@ -1,0 +1,17 @@
+---
+title: "Ноутбук: выборочные моменты"
+lang: ru
+format:
+  html:
+    toc: true
+    number-sections: true
+  pdf:
+    pdf-engine: xelatex
+jupyter: python3
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+{{< include moments-demo-body.qmd >}}

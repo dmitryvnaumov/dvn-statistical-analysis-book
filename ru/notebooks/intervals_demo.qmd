@@ -1,0 +1,36 @@
+---
+title: "Ноутбук: простейший доверительный интервал"
+lang: ru
+format:
+  html:
+    toc: true
+    number-sections: true
+  pdf:
+    pdf-engine: lualatex
+jupyter: python3
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+Небольшая заглушка: нормальная аппроксимация для интервала на биномиальную долю.
+
+## Интервал Уолда
+
+```{python}
+import math
+import pandas as pd
+
+n = 120
+k = 58
+p_hat = k / n
+sigma = math.sqrt(p_hat * (1 - p_hat) / n)
+lo = p_hat - 1.96 * sigma
+hi = p_hat + 1.96 * sigma
+
+pd.DataFrame({
+    "величина": ["p̂", "нижняя граница", "верхняя граница"],
+    "значение": [p_hat, lo, hi],
+})
+```

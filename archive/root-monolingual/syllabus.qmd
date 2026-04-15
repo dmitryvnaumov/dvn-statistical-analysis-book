@@ -1,0 +1,24 @@
+# Силлабус
+
+Ниже находится текущий маршрут курса. Первую тему уже можно использовать как
+рабочий шаблон для дальнейшего наполнения.
+
+| Раздел | Что внутри | Практика |
+|---|---|---|
+| Вероятность и моменты | Случайные величины, ожидание, дисперсия, выборочные моменты | [probability_demo](notebooks/probability_demo.html) |
+| Пуассон и гаусс | Счётные эксперименты, приближения, флуктуации | [poisson_toys](notebooks/poisson_toys.html) |
+| Likelihood | Построение и интерпретация функций правдоподобия | - |
+| Fitting | Least squares, binned и unbinned fits | - |
+| Интервалы | Coverage, Neyman construction, profile intervals | - |
+| Feldman-Cousins | Unified intervals и граничные режимы | [feldman_cousins_demo](notebooks/feldman_cousins_demo.html) |
+| Проверка гипотез | Test statistics, p-values, power | - |
+| Систематики | Nuisance parameters, covariance matrices, constraints | - |
+| Нейтринные кейсы | Toy examples для oscillation fits и близких задач | [oscillation_fit](notebooks/oscillation_fit.html) |
+
+## Ближайшие шаги
+
+1. Довести разделы про Poisson/Gaussian и likelihood до того же уровня плотности,
+   что и вводную главу.
+2. Перенести примеры с toy Monte Carlo в отдельные ноутбуки.
+3. Начать складывать рисунки и промежуточные данные в стабильные каталоги
+   `figures/generated/` и `data/processed/`.

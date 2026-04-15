@@ -1,0 +1,48 @@
+project:
+  type: book
+
+book:
+  title: "Statistical Analysis"
+  subtitle: "Online notes with companion notebooks"
+  author: "Dmitry Naumov"
+  chapters:
+    - index.qmd
+    - preface.qmd
+    - syllabus.qmd
+    - chapters/probability.qmd
+    - notebooks/probability_demo.qmd
+    - chapters/poisson_gaussian.qmd
+    - notebooks/poisson_gaussian_demo.qmd
+    - chapters/likelihood.qmd
+    - notebooks/likelihood_demo.qmd
+    - chapters/fitting.qmd
+    - notebooks/fitting_demo.qmd
+    - chapters/intervals.qmd
+    - notebooks/intervals_demo.qmd
+    - chapters/feldman_cousins.qmd
+    - notebooks/feldman_cousins_demo.qmd
+    - chapters/hypothesis_tests.qmd
+    - notebooks/hypothesis_tests_demo.qmd
+    - chapters/systematics.qmd
+    - notebooks/systematics_demo.qmd
+    - chapters/neutrino_cases.qmd
+    - notebooks/neutrino_cases_demo.qmd
+
+bibliography: ../shared/bib/references.bib
+lang: en
+
+format:
+  html:
+    toc: true
+    number-sections: true
+    css: ../shared/styles/book.css
+    include-in-header:
+      - ../shared/html/mathjax.html
+  pdf:
+    documentclass: scrbook
+    toc: true
+    number-sections: true
+    pdf-engine: lualatex
+    include-in-header:
+      - ../shared/latex/common-pdf.tex
+      - ../shared/latex/en-lang.tex

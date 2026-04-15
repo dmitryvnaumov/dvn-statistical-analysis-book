@@ -1,0 +1,53 @@
+# Moments
+
+Let $X$ be a random variable with probability density $f(x)$.
+
+The raw moment of order $k$ is defined by
+
+$$
+\mu_k' = \E[X^k].
+$$
+
+The central moment of order $k$ is defined by
+
+$$
+\mu_k = \E[(X-\E[X])^k].
+$$
+
+In particular,
+
+$$
+\mu_1' = \E[X],
+\qquad
+\mu_2 = \Var(X).
+$$
+
+For a sample $x_1,\dots,x_n$, a natural estimator of the raw moment is
+
+$$
+m_k' = \frac{1}{n}\sum_{i=1}^{n} x_i^k,
+$$
+
+while the corresponding sample central moment can be written as
+
+$$
+m_k = \frac{1}{n}\sum_{i=1}^{n} (x_i-\bar x)^k,
+\qquad
+\bar x = \frac{1}{n}\sum_{i=1}^{n}x_i.
+$$
+
+For the variance one often uses the unbiased estimator
+
+$$
+s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar x)^2.
+$$
+
+This chapter is enough to test:
+
+1. how formulas look in HTML and PDF;
+2. whether writing continuous prose feels natural;
+3. how a companion notebook coexists with the chapter.
+
+The minimal computational continuation is given in the companion notebook,
+where the mean, variance, and the third and fourth moments are evaluated for
+a toy sample.

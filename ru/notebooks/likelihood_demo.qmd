@@ -1,0 +1,48 @@
+---
+title: "Ноутбук: профиль лог-правдоподобия"
+lang: ru
+format:
+  html:
+    toc: true
+    number-sections: true
+  pdf:
+    pdf-engine: lualatex
+jupyter: python3
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+Заглушка для главы про likelihood: биномиальный пример с одним параметром.
+
+## Скан по параметру
+
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+n = 20
+k = 13
+p = np.linspace(0.05, 0.95, 300)
+logl = k * np.log(p) + (n - k) * np.log(1 - p)
+p_hat = k / n
+
+pd.DataFrame({
+    "величина": ["n", "k", "MLE"],
+    "значение": [n, k, p_hat],
+})
+```
+
+## Профиль лог-правдоподобия
+
+```{python}
+fig, ax = plt.subplots(figsize=(6.2, 4.0))
+ax.plot(p, logl - logl.max(), color="#6a4c93", linewidth=2)
+ax.axvline(p_hat, color="#c44536", linestyle="--", linewidth=2)
+ax.set_xlabel("p")
+ax.set_ylabel("Δ log L")
+ax.set_title("Биномиальное лог-правдоподобие")
+plt.show()
+```

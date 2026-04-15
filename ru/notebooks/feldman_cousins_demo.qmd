@@ -1,0 +1,32 @@
+---
+title: "Ноутбук: интервалы Feldman-Cousins"
+lang: ru
+format:
+  html:
+    toc: true
+    number-sections: true
+  pdf:
+    pdf-engine: lualatex
+jupyter: python3
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+Это пока численная заглушка для главы про unified intervals.
+
+## Черновая таблица
+
+```{python}
+import numpy as np
+import pandas as pd
+
+n_obs = np.arange(0, 6)
+proxy_limit = n_obs + 1.64 * np.sqrt(n_obs + 1)
+
+pd.DataFrame({
+    "наблюдаемое число событий": n_obs,
+    "черновой верхний ориентир": proxy_limit,
+})
+```
