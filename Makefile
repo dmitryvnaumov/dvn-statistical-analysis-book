@@ -1,9 +1,11 @@
 .DEFAULT_GOAL := help
 
 QUARTO ?= quarto
-PYTHON ?= $(HOME)/.pyenv/versions/3.12.2/envs/manim-env/bin/python
+PYTHON ?= python3
 QUARTO_PYTHON ?= $(PYTHON)
 MPLCONFIGDIR ?= $(CURDIR)/.make-tmp/mpl
+
+-include Makefile.local
 
 export QUARTO_PYTHON
 export MPLCONFIGDIR
@@ -24,9 +26,12 @@ help: ## Показать цели сборки
 	@printf '  make ru-notebook NOTEBOOK=probability_demo\n'
 	@printf '  make en-notebook NOTEBOOK=probability_demo\n'
 
-check-env: ## Проверить Quarto и manim-env
-	@command -v "$(QUARTO)" >/dev/null || { echo "Не найден quarto: $(QUARTO)"; exit 1; }
-	@test -x "$(PYTHON)" || { echo "Не найден Python: $(PYTHON)"; exit 1; }
+check-env: ## Проверить Quarto и Python
+	@command -v "$(QUARTO)" >/dev/null 2>&1 || { echo "Не найден quarto: $(QUARTO)"; exit 1; }
+	@if ! command -v "$(PYTHON)" >/dev/null 2>&1 && [ ! -x "$(PYTHON)" ]; then \
+	  echo "Не найден Python: $(PYTHON)"; exit 1; \
+	  exit 1; \
+	fi
 	@mkdir -p "$(MPLCONFIGDIR)"
 
 all: figures books ## Собрать фигуры и обе книги

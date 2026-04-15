@@ -43,7 +43,6 @@ jobs:
 
       - name: Build Pages artifact
         env:
-          PYTHON: python
         run: |
           make pages-site
 
