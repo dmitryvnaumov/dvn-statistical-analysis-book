@@ -47,6 +47,11 @@ jobs:
         run: |
           make pages-site
 
+      - name: Verify built site
+        run: |
+          ls -la .make-tmp/pages-site
+          test -f .make-tmp/pages-site/index.html
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
