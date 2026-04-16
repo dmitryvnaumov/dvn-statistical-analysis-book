@@ -1,0 +1,43 @@
+---
+title: "Lecture 2. Probability and Bayes' theorem"
+subtitle: "Statistical Data Analysis"
+author: "Dmitry V. Naumov (JINR)"
+format:
+  revealjs:
+    theme: black
+    width: 1024
+    height: 768
+    slide-number: true
+    preview-links: auto
+    chalkboard:
+      buttons: false
+    logo: img/dvnlogo.png
+    css: styles.css
+    transition: fade
+    center: true
+---
+
+# Lecture 2
+
+## Probability and Bayes' theorem
+
+---
+
+## Draft Outline
+
+- TODO: axioms of probability and conditional probability
+- TODO: Bayes' theorem and posterior updates
+- TODO: simple physics examples
+
+---
+
+## Exercises
+
+::: {.callout-warning .exbox appearance="simple"}
+## Exercise
+
+Show that the likelihood for a Poisson count $n$ with expectation $\mu$ is
+$$
+L(\mu)=\frac{\mu^n e^{-\mu}}{n!}.
+$$
+:::

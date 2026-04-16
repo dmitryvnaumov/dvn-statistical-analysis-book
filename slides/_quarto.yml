@@ -1,0 +1,72 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - index.qmd
+    - lecture-01-introduction.qmd
+    - lecture-02-probability-bayes.qmd
+    - lecture-03-random-variables-and-densities.qmd
+    - lecture-04-expectation-and-error-propagation.qmd
+    - lecture-05-common-probability-distributions.qmd
+    - lecture-06-monte-carlo-method.qmd
+    - lecture-07-statistical-tests-basics.qmd
+    - lecture-08-test-statistics-and-multivariate-methods.qmd
+    - lecture-09-goodness-of-fit-and-significance.qmd
+    - lecture-10-feldman-cousins-and-cls.qmd
+    - lecture-11-parameter-estimation-and-maximum-likelihood.qmd
+    - lecture-12-method-of-least-squares.qmd
+    - lecture-13-interval-estimation-and-limits.qmd
+    - lecture-14-nuisance-parameters-and-systematics.qmd
+    - lecture-15-bayesian-examples.qmd
+
+website:
+  title: "Statistical Data Analysis: Slides"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Course Index
+  sidebar:
+    style: docked
+    collapse-level: 1
+    contents:
+      - section: "Course"
+        contents:
+          - text: "Index"
+            href: index.qmd
+      - section: "Lectures"
+        contents:
+          - text: "Lecture 1. Motivation"
+            href: lecture-01-introduction.qmd
+          - text: "Lecture 2. Probability and Bayes"
+            href: lecture-02-probability-bayes.qmd
+          - text: "Lecture 3. Random Variables and Densities"
+            href: lecture-03-random-variables-and-densities.qmd
+          - text: "Lecture 4. Expectation and Error Propagation"
+            href: lecture-04-expectation-and-error-propagation.qmd
+          - text: "Lecture 5. Common Probability Distributions"
+            href: lecture-05-common-probability-distributions.qmd
+          - text: "Lecture 6. Monte Carlo Method"
+            href: lecture-06-monte-carlo-method.qmd
+          - text: "Lecture 7. Statistical Tests: Basics"
+            href: lecture-07-statistical-tests-basics.qmd
+          - text: "Lecture 8. Test Statistics and Multivariate Methods"
+            href: lecture-08-test-statistics-and-multivariate-methods.qmd
+          - text: "Lecture 9. Goodness-of-Fit and Significance"
+            href: lecture-09-goodness-of-fit-and-significance.qmd
+          - text: "Lecture 10. Feldman-Cousins and CLs"
+            href: lecture-10-feldman-cousins-and-cls.qmd
+          - text: "Lecture 11. Parameter Estimation and Likelihood"
+            href: lecture-11-parameter-estimation-and-maximum-likelihood.qmd
+          - text: "Lecture 12. Least Squares"
+            href: lecture-12-method-of-least-squares.qmd
+          - text: "Lecture 13. Interval Estimation and Limits"
+            href: lecture-13-interval-estimation-and-limits.qmd
+          - text: "Lecture 14. Nuisance Parameters and Systematics"
+            href: lecture-14-nuisance-parameters-and-systematics.qmd
+          - text: "Lecture 15. Bayesian Examples"
+            href: lecture-15-bayesian-examples.qmd
+
+format:
+  html:
+    theme: flatly
+    toc: true

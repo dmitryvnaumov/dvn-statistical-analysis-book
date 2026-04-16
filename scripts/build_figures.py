@@ -41,7 +41,7 @@ def build_poisson_pmf(out_dir: Path, lam: float = 4.0) -> None:
 
 
 def main() -> None:
-    out_dir = ensure_dir(project_root() / "figures" / "generated")
+    out_dir = ensure_dir(project_root() / "shared" / "figures" / "generated")
     build_normal_density(out_dir)
     build_poisson_pmf(out_dir)
 

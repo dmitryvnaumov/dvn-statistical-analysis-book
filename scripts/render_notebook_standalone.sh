@@ -19,7 +19,8 @@ case "$lang" in
 esac
 
 root_dir="$(cd "$(dirname "$0")/.." && pwd)"
-source_qmd="$root_dir/$lang/notebooks/$slug.qmd"
+book_lang_dir="$root_dir/book/$lang"
+source_qmd="$book_lang_dir/notebooks/$slug.qmd"
 
 if [ ! -f "$source_qmd" ]; then
   echo "notebook not found: $source_qmd" >&2
@@ -56,10 +57,10 @@ EOF
   quarto render index.qmd --to pdf --output "$slug.pdf"
 )
 
-mv "$tmp_dir/$slug.html" "$root_dir/$lang/notebooks/$slug.html"
-mv "$tmp_dir/$slug.pdf" "$root_dir/$lang/notebooks/$slug.pdf"
+mv "$tmp_dir/$slug.html" "$book_lang_dir/notebooks/$slug.html"
+mv "$tmp_dir/$slug.pdf" "$book_lang_dir/notebooks/$slug.pdf"
 
 if [ -d "$tmp_dir/${slug}_files" ]; then
-  rm -rf "$root_dir/$lang/notebooks/${slug}_files"
-  mv "$tmp_dir/${slug}_files" "$root_dir/$lang/notebooks/${slug}_files"
+  rm -rf "$book_lang_dir/notebooks/${slug}_files"
+  mv "$tmp_dir/${slug}_files" "$book_lang_dir/notebooks/${slug}_files"
 fi

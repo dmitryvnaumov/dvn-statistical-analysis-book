@@ -12,8 +12,10 @@ export MPLCONFIGDIR
 
 RU_NOTEBOOKS := probability_demo poisson_gaussian_demo likelihood_demo fitting_demo intervals_demo feldman_cousins_demo hypothesis_tests_demo systematics_demo neutrino_cases_demo
 EN_NOTEBOOKS := $(RU_NOTEBOOKS)
+BOOK_RU_DIR := book/ru
+BOOK_EN_DIR := book/en
 
-.PHONY: help check-env all books notebooks figures \
+.PHONY: help check-env all books notebooks figures slides-site \
 	pages-site \
 	ru ru-html ru-pdf en en-html en-pdf \
 	ru-notebooks en-notebooks \
@@ -38,26 +40,29 @@ all: figures books ## Собрать фигуры и обе книги
 
 books: ru en ## Собрать обе книги
 
-pages-site: figures ru-html en-html ## Собрать локальный артефакт GitHub Pages в .make-tmp/pages-site
+pages-site: figures ru-html en-html slides-site ## Собрать локальный артефакт GitHub Pages в .make-tmp/pages-site
 	scripts/assemble_pages_site.sh
 
+slides-site: check-env ## Собрать сайт со слайдами
+	$(QUARTO) render slides
+
 ru: check-env ## Собрать русскую книгу целиком
-	$(QUARTO) render ru
+	$(QUARTO) render $(BOOK_RU_DIR)
 
 en: check-env ## Собрать английскую книгу целиком
-	$(QUARTO) render en
+	$(QUARTO) render $(BOOK_EN_DIR)
 
 ru-html: check-env ## Собрать HTML русской книги
-	$(QUARTO) render ru --to html
+	$(QUARTO) render $(BOOK_RU_DIR) --to html
 
 ru-pdf: check-env ## Собрать PDF русской книги
-	$(QUARTO) render ru --to pdf
+	$(QUARTO) render $(BOOK_RU_DIR) --to pdf
 
 en-html: check-env ## Собрать HTML английской книги
-	$(QUARTO) render en --to html
+	$(QUARTO) render $(BOOK_EN_DIR) --to html
 
 en-pdf: check-env ## Собрать PDF английской книги
-	$(QUARTO) render en --to pdf
+	$(QUARTO) render $(BOOK_EN_DIR) --to pdf
 
 figures: check-env ## Сгенерировать общие фигуры
 	$(PYTHON) scripts/build_figures.py
@@ -83,16 +88,16 @@ en-notebook: check-env ## Собрать один английский notebook:
 clean: clean-ru clean-en clean-notebooks clean-figures clean-cache ## Очистить артефакты сборки
 
 clean-ru: ## Очистить артефакты русской книги
-	rm -rf ru/_book ru/.quarto
+	rm -rf $(BOOK_RU_DIR)/_book $(BOOK_RU_DIR)/.quarto
 
 clean-en: ## Очистить артефакты английской книги
-	rm -rf en/_book en/.quarto
+	rm -rf $(BOOK_EN_DIR)/_book $(BOOK_EN_DIR)/.quarto
 
 clean-notebooks: ## Очистить standalone-артефакты ноутбуков
-	rm -rf ru/notebooks/*.html ru/notebooks/*.pdf ru/notebooks/*_files en/notebooks/*.html en/notebooks/*.pdf en/notebooks/*_files
+	rm -rf $(BOOK_RU_DIR)/notebooks/*.html $(BOOK_RU_DIR)/notebooks/*.pdf $(BOOK_RU_DIR)/notebooks/*_files $(BOOK_EN_DIR)/notebooks/*.html $(BOOK_EN_DIR)/notebooks/*.pdf $(BOOK_EN_DIR)/notebooks/*_files
 
-clean-figures: ## Очистить figures/generated
-	rm -rf figures/generated/*
+clean-figures: ## Очистить shared/figures/generated
+	rm -rf shared/figures/generated/*
 
 clean-cache: ## Очистить временные кэши
 	rm -rf .make-tmp
