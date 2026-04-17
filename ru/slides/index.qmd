@@ -5,7 +5,7 @@ author: "Дмитрий В. Наумов (ОИЯИ)"
 
 format:
   html:
-    toc: true
+    toc: false
 ---
 
 # Слайды лекций
@@ -26,23 +26,3 @@ format:
 - [Лекция 14. Nuisance-параметры и систематические неопределенности](lecture-14-nuisance-parameters-and-systematics.qmd)
 - [Лекция 15. Примеры байесовского подхода](lecture-15-bayesian-examples.qmd)
 
-## Сборка
-
-Собрать весь сайт слайдов:
-
-```bash
-quarto render ru/slides
-```
-
-Для OJS-слайдов открывайте через HTTP (не `file://`):
-
-```bash
-quarto preview ru/slides
-```
-
-или:
-
-```bash
-cd ru/slides/_site
-python3 -m http.server 8000
-```

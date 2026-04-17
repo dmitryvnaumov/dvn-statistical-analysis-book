@@ -4,6 +4,7 @@
   --r-heading-color: #ffffff;
   --r-link-color: #8ec5ff;
   --r-selection-background-color: #1f4e79;
+  --r-progress-color: #ffb347;
 }
 
 .reveal {
@@ -42,6 +43,21 @@
   font-size: 0.55em !important;
 }
 
+.code-copy-button,
+.code-copy-button-tooltip,
+.reveal .code-copy-button,
+.reveal .code-copy-button-tooltip {
+  display: none !important;
+}
+
+.reveal .progress {
+  color: #ffb347 !important;
+}
+
+.reveal .progress span {
+  background: #ffb347 !important;
+}
+
 .reveal ul {
   display: inline-block;
   text-align: left;
@@ -51,12 +67,8 @@
   align-items: center;
 }
 
-
-А в `styles.css` добавь:
-
-```css id="9u6f8e"
-/* only this slide/widget */
-.fit-widget input,
+/* Widget controls */
+.fit-widget input:not([type="range"]),
 .fit-widget select,
 .fit-widget button {
   color: #111 !important;
@@ -64,36 +76,9 @@
   border: 1px solid #999 !important;
 }
 
-.fit-widget input[type="number"] {
-  color: #111 !important;
-  background: #f2f2f2 !important;
-}
-
-.fit-widget button {
-  color: #111 !important;
-  font-weight: 600;
-}
-
-.fit-widget label,
-.fit-widget .observablehq,
-.fit-widget .observablehq--inspect {
-  color: #fff !important;
-}
-
-
----
-
-### CSS
-
-Добавь в `styles.css`:
-
-```css
-.fit-widget input,
-.fit-widget select,
-.fit-widget button {
-  color: #111 !important;
-  background: #f2f2f2 !important;
-  border: 1px solid #999 !important;
+.fit-widget input[type="range"] {
+  border: none !important;
+  background: transparent !important;
 }
 
 .fit-widget button {
@@ -106,22 +91,19 @@
   color: #fff !important;
 }
 
-/* =========================================
-   Elegant blocks for black Reveal.js slides
-   ========================================= */
-
+/* Callouts */
 .reveal .slides section .callout {
   margin-top: 0.8em;
   margin-bottom: 0.8em;
   border-radius: 16px;
   border-left-width: 6px;
-  background: rgba(255,255,255,0.06);
+  background: rgba(255, 255, 255, 0.06);
   box-shadow: none;
 }
 
 .reveal .slides section .callout .callout-header {
   background: transparent !important;
-  border-bottom: 1px solid rgba(255,255,255,0.10);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-bottom: 0.35em;
   margin-bottom: 0.45em;
 }
@@ -138,43 +120,36 @@
   line-height: 1.35;
 }
 
-/* Definition */
 .reveal .slides section .defbox {
   border-left-color: #4ea1ff !important;
-  background: rgba(78,161,255,0.10) !important;
+  background: rgba(78, 161, 255, 0.1) !important;
 }
 
-/* Theorem */
 .reveal .slides section .thmbox {
   border-left-color: #b388ff !important;
-  background: rgba(179,136,255,0.10) !important;
+  background: rgba(179, 136, 255, 0.1) !important;
 }
 
-/* Exercise / Task */
 .reveal .slides section .exbox {
   border-left-color: #ffb74d !important;
-  background: rgba(255,183,77,0.10) !important;
+  background: rgba(255, 183, 77, 0.12) !important;
 }
 
-/* Solution */
 .reveal .slides section .solbox {
   border-left-color: #66bb6a !important;
-  background: rgba(102,187,106,0.10) !important;
+  background: rgba(102, 187, 106, 0.1) !important;
 }
 
-/* Remark */
 .reveal .slides section .remarkbox {
   border-left-color: #90a4ae !important;
-  background: rgba(144,164,174,0.12) !important;
+  background: rgba(144, 164, 174, 0.12) !important;
 }
 
-/* Proof */
 .reveal .slides section .proofbox {
   border-left-color: #ef5350 !important;
-  background: rgba(239,83,80,0.10) !important;
+  background: rgba(239, 83, 80, 0.1) !important;
 }
 
-/* Slightly more compact math inside boxes */
 .reveal .slides section .callout p,
 .reveal .slides section .callout li {
   margin-top: 0.25em;
@@ -185,4 +160,47 @@
 .reveal .slides section .callout ol {
   margin-top: 0.35em;
   margin-bottom: 0.1em;
+}
+
+/* Slide menu (sidebar) colors */
+.slide-menu-wrapper .slide-menu {
+  background-color: #16354d !important;
+}
+
+.slide-menu-wrapper .slide-menu-items {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.slide-menu-wrapper .slide-menu-item,
+.slide-menu-wrapper .slide-menu-item-vertical,
+.slide-menu-wrapper .slide-menu-panel,
+.slide-menu-wrapper .slide-menu-toolbar > li {
+  color: #d7e6f4 !important;
+}
+
+.slide-menu-wrapper .slide-menu-item,
+.slide-menu-wrapper .slide-tool-item {
+  border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.slide-menu-wrapper .active-menu-panel li.selected {
+  background-color: #23608c !important;
+  color: #ffffff !important;
+}
+
+.slide-menu-wrapper .active-menu-panel li.active {
+  color: #ffffff !important;
+}
+
+.reveal .slide-menu-button {
+  left: 10px !important;
+  bottom: 10px !important;
+  padding: 2px !important;
+  border-radius: 8px !important;
+  background: rgba(22, 53, 77, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.reveal .slide-menu-button .fa-bars::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(255, 191, 97)" class="bi bi-list" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>') !important;
 }
