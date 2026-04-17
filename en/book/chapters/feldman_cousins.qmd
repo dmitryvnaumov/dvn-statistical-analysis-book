@@ -1,0 +1,20 @@
+# Feldman-Cousins Intervals
+
+The Feldman-Cousins construction matters most when standard recipes become unstable:
+near physical boundaries, at low counts, and in regimes where the procedure should
+switch consistently between an upper limit and a two-sided interval.
+
+At this stage the chapter mainly fixes the ordering principle and the idea of a
+unified construction. A full implementation usually requires toy Monte Carlo or a
+careful tabulation.
+
+::: {.notebook-card}
+### Companion notebook
+
+The placeholder notebook keeps a minimal table of observed counts and a draft
+numerical scaffold that can later be replaced by a full construction.
+
+<div class="notebook-actions">
+  <a class="notebook-link notebook-link-primary" href="../notebooks/feldman_cousins_demo.qmd">Open notebook</a>
+</div>
+:::

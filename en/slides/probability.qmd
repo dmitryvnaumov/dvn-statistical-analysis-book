@@ -1,0 +1,35 @@
+---
+title: "Statistical Data Analysis"
+subtitle: "A practical course for particle physicists and astrophysicists"
+author: "Dmitry V. Naumov"
+format:
+  revealjs:
+    theme: black
+    width: 1024
+    height: 768
+    slide-number: true
+    preview-links: auto
+    chalkboard:
+      buttons: false
+    logo: shared/figures/dvnlogo.png
+    css: styles.css
+    transition: fade
+    center: true
+---
+## 
+
+# Lecture 1
+
+## From fluctuations to likelihood
+
+### Probability, counting, and statistical inference
+
+---
+
+## Roadmap
+
+- Random variables and probability distributions
+- Poisson and Gaussian laws
+- Central limit theorem
+- Likelihood and parameter estimation
+- Confidence regions

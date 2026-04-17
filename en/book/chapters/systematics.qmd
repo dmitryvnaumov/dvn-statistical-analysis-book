@@ -1,0 +1,19 @@
+# Systematic Uncertainties
+
+A realistic analysis is almost never limited to purely statistical fluctuations.
+One needs a clean way to introduce, constrain, and propagate systematic effects so
+that they enter the model transparently and remain testable.
+
+The structural outline is straightforward: nuisance parameters, covariance matrices,
+constrained fits, and simple propagation schemes.
+
+::: {.notebook-card}
+### Companion notebook
+
+The notebook for this chapter shows the simplest combination of statistical and
+systematic uncertainties and leaves room for more serious covariance studies later.
+
+<div class="notebook-actions">
+  <a class="notebook-link notebook-link-primary" href="../notebooks/systematics_demo.qmd">Open notebook</a>
+</div>
+:::

@@ -1,0 +1,15 @@
+bibliography: ../../shared/bib/references.bib
+lang: en
+
+format:
+  html:
+    toc: true
+    number-sections: true
+    css: ../../shared/styles/book.css
+    include-in-header:
+      - ../../shared/html/mathjax.html
+  pdf:
+    pdf-engine: lualatex
+    include-in-header:
+      - ../../shared/latex/common-pdf.tex
+      - ../../shared/latex/en-lang.tex

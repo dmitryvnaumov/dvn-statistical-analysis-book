@@ -1,0 +1,37 @@
+---
+title: "Лекция 4. Математическое ожидание и распространение ошибок"
+subtitle: "Статистический анализ данных"
+author: "Дмитрий В. Наумов (ОИЯИ)"
+format:
+  revealjs:
+    theme: black
+    width: 1024
+    height: 768
+    slide-number: true
+    preview-links: auto
+    chalkboard:
+      buttons: false
+    logo: shared/figures/dvnlogo.png
+    css: styles.css
+    transition: fade
+    center: true
+---
+
+## Черновой план
+
+- TODO: математическое ожидание, дисперсия, ковариация
+- TODO: корреляции и ковариационные матрицы
+- TODO: линейное распространение ошибок
+
+---
+
+## Задачи
+
+::: {.callout-warning .exbox appearance="simple"}
+## Задача
+
+Покажите, что функция правдоподобия для пуассоновского счёта $n$ с математическим ожиданием $\mu$ имеет вид
+$$
+L(\mu)=\frac{\mu^n e^{-\mu}}{n!}.
+$$
+:::

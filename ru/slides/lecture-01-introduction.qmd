@@ -1,0 +1,534 @@
+---
+title: "Лекция 1. Мотивация и обзор курса"
+subtitle: "Статистический анализ данных"
+author: "Дмитрий В. Наумов (ОИЯИ)"
+format:
+  revealjs:
+    theme: black
+    width: 1024
+    height: 768
+    slide-number: true
+    preview-links: auto
+    chalkboard:
+      buttons: false
+    logo: shared/figures/dvnlogo.png
+    css: styles.css
+    transition: fade
+    center: true
+---
+
+## Важное замечание
+
+::: incremental
+- Я не профессиональный статистик. Я физик, который применяет статистический анализ на практике.
+- На курсе мы разберем ключевые концепции, приемы и язык, на котором физики обсуждают результаты:
+    - Я обнаружил сигнал со значимостью 5 $\sigma$!
+    - Мы наблюдаем избыток в данных.
+    - Значимого избытка не наблюдается.
+    - Мы исключаем эту область параметров на уровне 95\% C.L.
+    - Мы устанавливаем верхний предел на сечение.
+    - Фит хорошо сошелся.
+    - Доминирующая неопределенность является систематической.
+    - Корреляции между бинами важны.
+    - Эти nuisance-параметры были профилированы в фите.
+    - Нужно использовать полную ковариационную матрицу.
+:::
+
+---
+
+## Обозначения
+::: incremental
+
+- Скалярные величины обозначаются курсивом: $x$, $y$, $\theta$
+- Векторы обозначаются полужирным шрифтом: $\mathbf{x}=(x_1,x_2,\dots,x_n)$
+- Матрицы обозначаются полужирными заглавными буквами: $\mathbf{V}$, $\mathbf{M}$
+
+- Случайные величины обозначаются заглавными буквами: $X$, $Y$
+- Их наблюденные значения обозначаются строчными буквами: $x$, $y$
+
+- Вероятность события $A$ обозначается как $P(A)$
+- Функция плотности вероятности обозначается как $f(x)$ или $p(x)$
+
+- Параметры модели обозначаются через $\theta$
+- Оценки параметров обозначаются через $\hat{\theta}$
+
+:::
+---
+
+## Обозначения (продолжение)
+::: incremental
+- Математическое ожидание: $\mathbb{E}[X]$
+- Дисперсия: $\mathrm{Var}(X)$
+- Стандартное отклонение: $\sigma_X=\sqrt{\mathrm{Var}(X)}$
+
+- Ковариация: $\mathrm{cov}(X,Y)$
+- Коэффициент корреляции: $\rho(X,Y)$
+:::
+
+---
+
+## Частотный и байесовский подходы
+
+Есть два основных подхода к интерпретации вероятности.
+
+- **Относительная частота (Frequentist)**  
+  $A$, $B$, ... , это исходы повторяемого эксперимента.
+
+  $$
+  P(A)=\lim\limits_{n\to\infty}\frac{\text{число наблюдений исхода }A}{n}
+  $$
+
+- **Субъективная вероятность (Bayes)**
+
+  $$
+  P(A)=\text{степень уверенности в истинности }A
+  $$
+
+  $$
+  P(A\mid B)=\frac{P(B\mid A)\,P(A)}{P(B)}
+  $$
+
+- На этом курсе мы в основном будем говорить о **частотной статистике**.
+
+---
+
+## Литература
+
+- Particle Data Group: [Review of statistics (2015)](http://pdg.lbl.gov/2015/reviews/rpp2015-rev-statistics.pdf)
+
+- G. Cowan, *Statistical Data Analysis*, Clarendon, Oxford, 1998  
+  также: [www.pp.rhul.ac.uk/~cowan/sda](http://www.pp.rhul.ac.uk/~cowan/sda)
+
+- R. J. Barlow, *Statistics: A Guide to the Use of Statistical Methods in the Physical Sciences*, Wiley, 1989  
+  также: [hepwww.ph.man.ac.uk/~roger/book.html](http://hepwww.ph.man.ac.uk/~roger/book.html)
+
+- L. Lyons, *Statistics for Nuclear and Particle Physics*, CUP, 1986
+
+- F. James, *Statistical and Computational Methods in Experimental Physics*, 2nd ed., World Scientific, 2006
+
+- Лекции G. Cowan с большим количеством материалов:  
+  [www.pp.rhul.ac.uk/~cowan/stat_course.html](http://www.pp.rhul.ac.uk/~cowan/stat_course.html)
+
+---
+
+## Зачем нам статистика в физике?
+
+---
+
+## Четыре основных шага
+::: incremental
+- Теория:
+  - Эффект закодирован в $\mathbf{t}$. 
+  - Пример: число бозонов Хиггса, рожденных на LHC.
+- Эксперимент:
+  - Поиск эффекта. Наблюдаемое значение: $\mathbf{d}$.
+- Статистический анализ:
+  - Сравниваем ожидание модели $\mathbf{t}$ с наблюдением $\mathbf{d}$.
+  - Делаем вывод:
+    - теория подтверждается, это экспериментальное открытие.
+    - теория опровергается, область параметров исключается.  
+- Пишем статью.
+:::
+
+---
+
+# Умеете ли вы читать такие типичные графики в современной физике?
+
+---
+
+## Открытие бозона Хиггса
+
+::: columns
+
+::: {.column width="50%"}
+
+![](shared/figures/Atlas_pvalue.png){width=95%}
+
+::: incremental
+- Что такое
+  - $p$-value?
+  - $\sigma$?
+:::
+
+:::
+
+::: {.column width="50%"}
+
+![](shared/figures/CMS_pvalue.png){width=90%}
+
+:::
+
+:::
+
+---
+
+## Daya Bay: открытие ненулевого $\theta_{13}$
+
+![](shared/figures/DayaBayTheta13.png){width=50%}
+
+Опубликовано в: Phys.Rev.Lett. 108 (2012) 171803 
+
+- Что такое осцилляционный фит?  
+- Что такое значение best fit?  
+- Что такое статистическая значимость фита?  
+
+---
+
+## Daya Bay: исключение области параметров стерильного нейтрино
+
+![](shared/figures/DBSterile.png){width=50%}
+
+Опубликовано в: Phys.Rev.Lett. 133 (2024) 5, 051801
+
+- Что здесь исключено?  
+- Почему это исключение обосновано?
+- Что такое "FC sensitivity"?  
+- Что такое CL$_s$?  
+
+---
+
+## В этих графиках скрыто много понятий
+
+::: incremental
+
+- случайные флуктуации
+- распределения вероятности
+- правдоподобие и $\chi^2$
+- best fit
+- доверительные интервалы и контуры
+- значимость и $p$-value
+- систематические неопределенности
+- nuisance-параметры
+- профилирование
+- верхние пределы и исключения
+
+:::
+
+## Если пока не все из этого понятно, этот курс для вас
+
+---
+
+## Чему мы научимся?
+
+::: incremental
+
+- Вероятность, теорема Байеса
+- Случайные величины и плотности вероятности
+- Математическое ожидание, распространение ошибок
+- Различные распределения вероятности
+- Метод Монте-Карло
+- Статистические тесты: общие понятия
+- Статистики тестов, многомерные методы
+- Тесты goodness-of-fit: p-value, значимость, открытие и исключение
+
+:::
+
+---
+
+## Чему мы научимся?
+
+::: incremental
+
+- Фельдман-Казинс, CL$_s$ и другие методы
+- Оценивание параметров, максимальное правдоподобие
+- Метод наименьших квадратов
+- Интервальные оценки, установление ограничений
+- Nuisance-параметры, систематические неопределенности
+- Примеры байесовского подхода
+
+:::
+
+---
+
+## Начинаем
+
+---
+
+## Игрушечный пример: определение ширины гауссианы
+
+::: incremental
+- Предположим, что данные имеют гауссову форму
+  $$
+  y(x)=\exp\!\left(-\frac{x^2}{2\sigma^2}\right),
+  $$
+  с известным центром $x_0=0$ и нормировкой $N=1$.
+
+- Единственный неизвестный параметр, ширина $\sigma$.
+
+- Мы генерируем псевдоданные со статистическими флуктуациями.
+
+- Ваша задача: найти $\sigma$, сравнив модель с данными.
+
+- Для каждого выбранного значения $\sigma$ вычисляется
+  $$  
+  \chi^2(\sigma)=\sum_i \frac{[y_i-y(x_i;\sigma)]^2}{\delta y_i^2}.
+  $$
+
+- Значение $\sigma$, соответствующее best fit, минимизирует $\chi^2$.
+:::
+
+## Псевдоданные и фит
+
+::: {.fit-widget}
+```{ojs}
+//| echo: false
+
+// Controls
+viewof sigma = Inputs.range([0.3, 2.0], {
+  value: 1.0,
+  step: 0.05,
+  label: "пробное σ"
+})
+
+viewof noise = Inputs.range([0.01, 0.15], {
+  value: 0.05,
+  step: 0.01,
+  label: "шум δy"
+})
+
+viewof regenerate = Inputs.button("Сгенерировать новые псевдоданные")
+
+viewof overlays = {
+  const control = Inputs.checkbox(
+    ["показать лучший фит", "показать истинное σ"],
+    {label: "показать", value: ["показать лучший фит"]}
+  );
+  control.classList.add("fit-overlays-inline");
+  return control;
+}
+
+showFit = overlays.includes("показать лучший фит")
+showTruth = overlays.includes("показать истинное σ")
+
+// Gaussian random number
+function randn() {
+  const u = 1 - Math.random();
+  const v = Math.random();
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+}
+
+// Fixed x values
+x = Array.from({length: 21}, (_, i) => -2.5 + 0.25 * i)
+
+// True sigma (hidden by default)
+sigmaTrue = {
+  regenerate;
+  return 0.5 + Math.random();
+}
+
+gauss = (x, s) => Math.exp(-(x * x) / (2 * s * s))
+
+data = {
+  regenerate;
+  return x.map((xi) => ({
+    x: xi,
+    y: gauss(xi, sigmaTrue) + noise * randn(),
+    err: noise
+  }));
+}
+
+chi2of = (s) => data.reduce(
+  (sum, d) => sum + ((d.y - gauss(d.x, s)) / d.err) ** 2,
+  0
+)
+
+chi2 = chi2of(sigma)
+
+sigmaGrid = Array.from({length: 341}, (_, i) => 0.30 + 0.005 * i)
+chi2Grid = sigmaGrid.map((s) => ({sigma: s, chi2: chi2of(s)}))
+best = chi2Grid.reduce((a, b) => (a.chi2 < b.chi2 ? a : b))
+sigmaFit = best.sigma
+chi2min = best.chi2
+ndf = Math.max(data.length - 1, 1)
+dchi2 = chi2 - chi2min
+
+trialCurve = x.map((xi) => ({x: xi, y: gauss(xi, sigma)}))
+fitCurve = x.map((xi) => ({x: xi, y: gauss(xi, sigmaFit)}))
+trueCurve = x.map((xi) => ({x: xi, y: gauss(xi, sigmaTrue)}))
+
+mutable history = []
+historyReset = {
+  regenerate;
+  mutable history = [];
+  return null;
+}
+
+historyUpdate = {
+  const h = history;
+  const last = h.length > 0 ? h[h.length - 1] : null;
+  const point = {sigma, chi2};
+
+  if (!last || Math.abs(last.sigma - point.sigma) > 1e-9) {
+    mutable history = [...h, point];
+  }
+  return null;
+}
+
+mainPlot = Plot.plot({
+  width: 700,
+  height: 380,
+  x: {label: "x"},
+  y: {label: "y", domain: [-0.2, 1.2]},
+  grid: true,
+  marks: [
+    Plot.ruleX(data, {
+      x: "x",
+      y1: (d) => d.y - d.err,
+      y2: (d) => d.y + d.err,
+      stroke: "white",
+      strokeWidth: 1.5
+    }),
+    Plot.dot(data, {x: "x", y: "y", r: 3.5, fill: "white", stroke: "white"}),
+    Plot.line(trialCurve, {x: "x", y: "y", stroke: "#ff6b6b", strokeWidth: 2}),
+    ...(showTruth ? [
+      Plot.line(trueCurve, {
+        x: "x",
+        y: "y",
+        stroke: "#8ec5ff",
+        strokeWidth: 2,
+        strokeOpacity: 0.85
+      })
+    ] : []),
+    ...(showFit ? [
+      Plot.line(fitCurve, {
+        x: "x",
+        y: "y",
+        stroke: "#7CFC00",
+        strokeWidth: 2,
+        strokeDasharray: "6,4"
+      })
+    ] : [])
+  ]
+})
+
+profilePlot = Plot.plot({
+  width: 320,
+  height: 230,
+  x: {label: "σ", domain: [0.3, 2.0]},
+  y: {label: "χ²"},
+  grid: true,
+  marks: [
+    Plot.line(chi2Grid, {
+      x: "sigma",
+      y: "chi2",
+      stroke: "#8ec5ff",
+      strokeOpacity: 0.75
+    }),
+    ...(history.length > 1 ? [
+      Plot.line(history, {
+        x: "sigma",
+        y: "chi2",
+        stroke: "gray",
+        strokeOpacity: 0.45
+      })
+    ] : []),
+    Plot.dot(history.slice(0, -1), {
+      x: "sigma",
+      y: "chi2",
+      fill: "gray",
+      r: 2.8
+    }),
+    Plot.dot([{sigma, chi2}], {
+      x: "sigma",
+      y: "chi2",
+      fill: "#ff6b6b",
+      r: 5
+    }),
+    ...(showFit ? [
+      Plot.dot([{sigma: sigmaFit, chi2: chi2min}], {
+        x: "sigma",
+        y: "chi2",
+        fill: "#7CFC00",
+        r: 5
+      }),
+      Plot.ruleY([chi2min], {
+        stroke: "#7CFC00",
+        strokeDasharray: "4,4"
+      })
+    ] : [])
+  ]
+})
+
+fitStyle = html`
+<style>
+.fit-widget .fit-overlays-inline {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.fit-widget .fit-overlays-inline label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+}
+
+.fit-widget .fit-layout {
+  display: grid;
+  grid-template-columns: minmax(520px, 1fr) 320px;
+  gap: 1rem;
+  align-items: start;
+}
+
+.fit-widget .fit-side figure {
+  margin: 0;
+}
+
+@media (max-width: 980px) {
+  .fit-widget .fit-layout {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+`
+
+html`
+<div>
+  ${fitStyle}
+  <div class="fit-layout">
+    <div class="fit-main">
+      ${mainPlot}
+    </div>
+    <div class="fit-side">
+      ${profilePlot}
+    </div>
+  </div>
+  <div style="margin-top:0.8em; font-size:0.9em; line-height:1.6;">
+    <div>
+      <span style="color:#ff6b6b;"><b>Ваш выбор:</b></span>
+      σ = ${sigma.toFixed(2)},
+      χ² = ${chi2.toFixed(2)},
+      χ²/ndf = ${(chi2 / ndf).toFixed(2)}
+    </div>
+    ${showFit ? `
+    <div>
+      <span style="color:#7CFC00;"><b>Лучший фит:</b></span>
+      σ_fit = ${sigmaFit.toFixed(3)},
+      χ²_min = ${chi2min.toFixed(2)},
+      Δχ² = ${dchi2.toFixed(2)}
+    </div>` : ``}
+    ${showTruth ? `
+    <div>
+      <span style="color:#8ec5ff;"><b>Истинное значение:</b></span>
+      σ_true = ${sigmaTrue.toFixed(3)}
+    </div>` : ``}
+  </div>
+</div>
+`
+```
+:::
+
+---
+
+## Задачи
+
+::: {.callout-warning .exbox appearance="simple"}
+## Задача
+
+Покажите, что функция правдоподобия для пуассоновского счёта $n$ с математическим ожиданием $\mu$ имеет вид
+$$
+L(\mu)=\frac{\mu^n e^{-\mu}}{n!}.
+$$
+:::

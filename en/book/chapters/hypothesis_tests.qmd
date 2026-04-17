@@ -1,0 +1,19 @@
+# Hypothesis Tests
+
+Hypothesis testing addresses the compatibility of data with a stated claim. In
+practice it is especially important not to confuse a p-value, a significance level,
+a test power, and a posterior probability for the hypothesis.
+
+Later this chapter will collect likelihood-ratio tests, toy studies of power, and
+common misinterpretations of statistical significance.
+
+::: {.notebook-card}
+### Companion notebook
+
+The companion notebook shows a minimal toy test for a normal sample and acts as the
+entry point for later power studies.
+
+<div class="notebook-actions">
+  <a class="notebook-link notebook-link-primary" href="../notebooks/hypothesis_tests_demo.qmd">Open notebook</a>
+</div>
+:::

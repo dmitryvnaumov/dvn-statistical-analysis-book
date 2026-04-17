@@ -1,0 +1,48 @@
+---
+title: "Статистический анализ данных"
+subtitle: "Практический курс для физики высоких энергий и астрофизики"
+author: "Дмитрий В. Наумов (ОИЯИ)"
+
+format:
+  html:
+    toc: true
+---
+
+# Слайды лекций
+
+- [Лекция 1. Мотивация и обзор курса](lecture-01-introduction.qmd)
+- [Лекция 2. Вероятность и теорема Байеса](lecture-02-probability-bayes.qmd)
+- [Лекция 3. Случайные величины и плотности вероятности](lecture-03-random-variables-and-densities.qmd)
+- [Лекция 4. Математическое ожидание и распространение ошибок](lecture-04-expectation-and-error-propagation.qmd)
+- [Лекция 5. Основные распределения вероятностей](lecture-05-common-probability-distributions.qmd)
+- [Лекция 6. Метод Монте-Карло](lecture-06-monte-carlo-method.qmd)
+- [Лекция 7. Статистические тесты: общие понятия](lecture-07-statistical-tests-basics.qmd)
+- [Лекция 8. Статистики тестов и многомерные методы](lecture-08-test-statistics-and-multivariate-methods.qmd)
+- [Лекция 9. Проверка согласия, p-value, значимость, открытие и исключение](lecture-09-goodness-of-fit-and-significance.qmd)
+- [Лекция 10. Фельдман-Казинс, CLs и родственные методы](lecture-10-feldman-cousins-and-cls.qmd)
+- [Лекция 11. Оценивание параметров и метод максимального правдоподобия](lecture-11-parameter-estimation-and-maximum-likelihood.qmd)
+- [Лекция 12. Метод наименьших квадратов](lecture-12-method-of-least-squares.qmd)
+- [Лекция 13. Интервальные оценки и установление ограничений](lecture-13-interval-estimation-and-limits.qmd)
+- [Лекция 14. Nuisance-параметры и систематические неопределенности](lecture-14-nuisance-parameters-and-systematics.qmd)
+- [Лекция 15. Примеры байесовского подхода](lecture-15-bayesian-examples.qmd)
+
+## Сборка
+
+Собрать весь сайт слайдов:
+
+```bash
+quarto render ru/slides
+```
+
+Для OJS-слайдов открывайте через HTTP (не `file://`):
+
+```bash
+quarto preview ru/slides
+```
+
+или:
+
+```bash
+cd ru/slides/_site
+python3 -m http.server 8000
+```
