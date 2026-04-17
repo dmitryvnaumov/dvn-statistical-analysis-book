@@ -19,7 +19,7 @@ case "$lang" in
 esac
 
 root_dir="$(cd "$(dirname "$0")/.." && pwd)"
-book_lang_dir="$root_dir/book/$lang"
+book_lang_dir="$root_dir/$lang/book"
 source_qmd="$book_lang_dir/notebooks/$slug.qmd"
 
 if [ ! -f "$source_qmd" ]; then

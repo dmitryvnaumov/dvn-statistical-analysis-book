@@ -12,10 +12,13 @@ export MPLCONFIGDIR
 
 RU_NOTEBOOKS := probability_demo poisson_gaussian_demo likelihood_demo fitting_demo intervals_demo feldman_cousins_demo hypothesis_tests_demo systematics_demo neutrino_cases_demo
 EN_NOTEBOOKS := $(RU_NOTEBOOKS)
-BOOK_RU_DIR := book/ru
-BOOK_EN_DIR := book/en
+BOOK_RU_DIR := ru/book
+BOOK_EN_DIR := en/book
+SLIDES_RU_DIR := ru/slides
+SLIDES_EN_DIR := en/slides
 
 .PHONY: help check-env all books notebooks figures slides-site \
+	ru-slides en-slides \
 	pages-site \
 	ru ru-html ru-pdf en en-html en-pdf \
 	ru-notebooks en-notebooks \
@@ -43,8 +46,13 @@ books: ru en ## Собрать обе книги
 pages-site: figures ru-html en-html slides-site ## Собрать локальный артефакт GitHub Pages в .make-tmp/pages-site
 	scripts/assemble_pages_site.sh
 
-slides-site: check-env ## Собрать сайт со слайдами
-	$(QUARTO) render slides
+slides-site: ru-slides en-slides ## Собрать сайты со слайдами RU и EN
+
+ru-slides: check-env ## Собрать русские слайды
+	$(QUARTO) render $(SLIDES_RU_DIR)
+
+en-slides: check-env ## Собрать английские слайды
+	$(QUARTO) render $(SLIDES_EN_DIR)
 
 ru: check-env ## Собрать русскую книгу целиком
 	$(QUARTO) render $(BOOK_RU_DIR)

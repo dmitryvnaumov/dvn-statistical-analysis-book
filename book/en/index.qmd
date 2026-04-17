@@ -1,5 +1,0 @@
----
-title: "Home"
----
-
-This is the online book on statistical analysis.
