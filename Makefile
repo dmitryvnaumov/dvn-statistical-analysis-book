@@ -4,13 +4,15 @@ QUARTO ?= quarto
 PYTHON ?= python3
 QUARTO_PYTHON ?= $(PYTHON)
 MPLCONFIGDIR ?= $(CURDIR)/.make-tmp/mpl
+QUARTO_HOME ?= $(CURDIR)/.make-tmp/quarto-home
+QUARTO_ENV ?= HOME="$(QUARTO_HOME)" XDG_CACHE_HOME="$(QUARTO_HOME)/.cache"
 
 -include Makefile.local
 
 export QUARTO_PYTHON
 export MPLCONFIGDIR
 
-RU_NOTEBOOKS := probability_demo poisson_gaussian_demo likelihood_demo fitting_demo intervals_demo feldman_cousins_demo hypothesis_tests_demo systematics_demo neutrino_cases_demo
+RU_NOTEBOOKS := probability_demo uniform_sample_demo binomial_sample_demo poisson_sample_demo normal_sample_demo binomial_pmf_demo poisson_pmf_demo normal_density_demo poisson_gaussian_demo likelihood_demo fitting_demo intervals_demo feldman_cousins_demo hypothesis_tests_demo systematics_demo neutrino_cases_demo
 EN_NOTEBOOKS := $(RU_NOTEBOOKS)
 BOOK_RU_DIR := ru/book
 BOOK_EN_DIR := en/book
@@ -38,6 +40,7 @@ check-env: ## Проверить Quarto и Python
 	  exit 1; \
 	fi
 	@mkdir -p "$(MPLCONFIGDIR)"
+	@mkdir -p "$(QUARTO_HOME)/Library/Caches" "$(QUARTO_HOME)/.cache"
 
 all: figures books ## Собрать фигуры и обе книги
 
@@ -49,49 +52,49 @@ pages-site: figures ru-html en-html slides-site ## Собрать локальн
 slides-site: ru-slides en-slides ## Собрать сайты со слайдами RU и EN
 
 ru-slides: check-env ## Собрать русские слайды
-	$(QUARTO) render $(SLIDES_RU_DIR)
+	$(QUARTO_ENV) $(QUARTO) render $(SLIDES_RU_DIR)
 
 en-slides: check-env ## Собрать английские слайды
-	$(QUARTO) render $(SLIDES_EN_DIR)
+	$(QUARTO_ENV) $(QUARTO) render $(SLIDES_EN_DIR)
 
 ru: check-env ## Собрать русскую книгу целиком
-	$(QUARTO) render $(BOOK_RU_DIR)
+	$(QUARTO_ENV) $(QUARTO) render $(BOOK_RU_DIR)
 
 en: check-env ## Собрать английскую книгу целиком
-	$(QUARTO) render $(BOOK_EN_DIR)
+	$(QUARTO_ENV) $(QUARTO) render $(BOOK_EN_DIR)
 
 ru-html: check-env ## Собрать HTML русской книги
-	$(QUARTO) render $(BOOK_RU_DIR) --to html
+	$(QUARTO_ENV) $(QUARTO) render $(BOOK_RU_DIR) --to html
 
 ru-pdf: check-env ## Собрать PDF русской книги
-	$(QUARTO) render $(BOOK_RU_DIR) --to pdf
+	$(QUARTO_ENV) $(QUARTO) render $(BOOK_RU_DIR) --to pdf
 
 en-html: check-env ## Собрать HTML английской книги
-	$(QUARTO) render $(BOOK_EN_DIR) --to html
+	$(QUARTO_ENV) $(QUARTO) render $(BOOK_EN_DIR) --to html
 
 en-pdf: check-env ## Собрать PDF английской книги
-	$(QUARTO) render $(BOOK_EN_DIR) --to pdf
+	$(QUARTO_ENV) $(QUARTO) render $(BOOK_EN_DIR) --to pdf
 
 figures: check-env ## Сгенерировать общие фигуры
 	$(PYTHON) scripts/build_figures.py
 
 ru-notebooks: check-env ## Пересобрать все русские ноутбуки как отдельные входы
 	@for nb in $(RU_NOTEBOOKS); do \
-	  scripts/render_notebook_standalone.sh ru $$nb; \
+	  $(QUARTO_ENV) scripts/render_notebook_standalone.sh ru $$nb; \
 	done
 
 en-notebooks: check-env ## Пересобрать все английские ноутбуки как отдельные входы
 	@for nb in $(EN_NOTEBOOKS); do \
-	  scripts/render_notebook_standalone.sh en $$nb; \
+	  $(QUARTO_ENV) scripts/render_notebook_standalone.sh en $$nb; \
 	done
 
 ru-notebook: check-env ## Собрать один русский notebook: make ru-notebook NOTEBOOK=probability_demo
 	@test -n "$(NOTEBOOK)" || { echo "Укажи NOTEBOOK=<slug>"; exit 1; }
-	scripts/render_notebook_standalone.sh ru $(NOTEBOOK)
+	$(QUARTO_ENV) scripts/render_notebook_standalone.sh ru $(NOTEBOOK)
 
 en-notebook: check-env ## Собрать один английский notebook: make en-notebook NOTEBOOK=probability_demo
 	@test -n "$(NOTEBOOK)" || { echo "Укажи NOTEBOOK=<slug>"; exit 1; }
-	scripts/render_notebook_standalone.sh en $(NOTEBOOK)
+	$(QUARTO_ENV) scripts/render_notebook_standalone.sh en $(NOTEBOOK)
 
 clean: clean-ru clean-en clean-notebooks clean-figures clean-cache ## Очистить артефакты сборки
 

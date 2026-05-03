@@ -6,7 +6,8 @@ project:
   render:
     - index.qmd
     - lecture-01-introduction.qmd
-    - lecture-02-probability-bayes.qmd
+    - lecture-02-probability-I.qmd
+    - lecture-02-probability-II.qmd
     - lecture-03-random-variables-and-densities.qmd
     - lecture-04-expectation-and-error-propagation.qmd
     - lecture-05-common-probability-distributions.qmd
@@ -39,8 +40,10 @@ website:
         contents:
           - text: "Лекция 1. Мотивация"
             href: lecture-01-introduction.qmd
-          - text: "Лекция 2. Вероятность и Байес"
-            href: lecture-02-probability-bayes.qmd
+          - text: "Лекция 2. Вероятность I"
+            href: lecture-02-probability-I.qmd
+          - text: "Лекция 2. Вероятность II"
+            href: lecture-02-probability-II.qmd
           - text: "Лекция 3. Случайные величины и плотности"
             href: lecture-03-random-variables-and-densities.qmd
           - text: "Лекция 4. Матожидание и распространение ошибок"

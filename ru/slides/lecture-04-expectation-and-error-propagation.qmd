@@ -25,6 +25,29 @@ format:
 
 ---
 
+## Как увидеть распределение на практике
+
+::: incremental
+- Сгенерировать много реализаций случайной величины.
+- Для дискретной величины посчитать частоты.
+- Для непрерывной величины построить нормированную гистограмму.
+- Чем больше статистика, тем ближе гистограмма к PMF/PDF.
+:::
+
+
+## NumPy: биномиальное распределение
+
+{{< embed notebooks/binomial_sample_demo.qmd >}}
+
+## NumPy: распределение Пуассона
+
+{{< embed notebooks/poisson_sample_demo.qmd >}}
+
+## NumPy: нормальное распределение
+
+{{< embed notebooks/normal_sample_demo.qmd >}}
+
+
 ## Задачи
 
 ::: {.callout-warning .exbox appearance="simple"}

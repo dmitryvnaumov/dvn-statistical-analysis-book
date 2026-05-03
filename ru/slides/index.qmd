@@ -11,7 +11,9 @@ format:
 # Слайды лекций
 
 - [Лекция 1. Мотивация и обзор курса](lecture-01-introduction.qmd)
-- [Лекция 2. Вероятность и теорема Байеса](lecture-02-probability-bayes.qmd)
+- [Лекция 2. Случайные величины, распределения, моменты](lecture-02-random-distributions.qmd)
+- [Лекция 3. Центральная предельная теорема](lecture-03-central-limit-theorem.qmd)
+- [Лекция 2. Вероятность II](lecture-02-probability-II.qmd)
 - [Лекция 3. Случайные величины и плотности вероятности](lecture-03-random-variables-and-densities.qmd)
 - [Лекция 4. Математическое ожидание и распространение ошибок](lecture-04-expectation-and-error-propagation.qmd)
 - [Лекция 5. Основные распределения вероятностей](lecture-05-common-probability-distributions.qmd)

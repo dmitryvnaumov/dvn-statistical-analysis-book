@@ -58,11 +58,13 @@
   background: #ffb347 !important;
 }
 
-.reveal ul {
-  display: inline-block;
-  text-align: left;
+.reveal ul,
+.reveal ol {
+  display: block !important;
+  text-align: left !important;
+  margin-left: 1em !important;
+  padding-left: 0.8em !important;
 }
-
 .reveal .columns {
   align-items: center;
 }
@@ -89,6 +91,63 @@
 .fit-widget .observablehq,
 .fit-widget .observablehq--inspect {
   color: #fff !important;
+}
+
+.clt-widget input:not([type="range"]),
+.clt-widget select,
+.clt-widget button {
+  color: #111 !important;
+  background: #f2f2f2 !important;
+  border: 1px solid #999 !important;
+}
+
+.clt-widget input[type="range"] {
+  width: 280px !important;
+  border: none !important;
+  background: transparent !important;
+  accent-color: #ffb347;
+}
+
+.clt-widget label,
+.clt-widget .observablehq,
+.clt-widget .observablehq--inspect {
+  color: #fff !important;
+}
+
+.clt-widget .observablehq--inspect {
+  display: none !important;
+}
+
+.clt-widget .observablehq {
+  margin: 0.15rem 0;
+}
+
+.clt-widget .clt-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.clt-widget .clt-summary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.85rem;
+  font-size: 0.62em;
+  color: #f2f2f2;
+}
+
+.reveal .table-scroll {
+  max-height: 11.5em;
+  overflow-y: auto;
+  margin: 0.3em auto 0.5em auto;
+  padding-right: 0.15em;
+}
+
+.reveal .table-scroll table {
+  width: 100%;
+  font-size: 0.62em;
 }
 
 /* Callouts */
@@ -204,3 +263,96 @@
 .reveal .slide-menu-button .fa-bars::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(255, 191, 97)" class="bi bi-list" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>') !important;
 }
+
+
+.reveal .taskbox {
+  margin-top: 0.6em;
+  padding: 0.9em 1.2em;
+  border-radius: 18px;
+  border: 2px solid rgba(255, 215, 120, 0.78);
+  background: rgba(255, 215, 120, 0.10);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.04) inset;
+  color: #f5f1e8 !important;
+}
+
+/* весь обычный текст внутри */
+.reveal .taskbox,
+.reveal .taskbox p,
+.reveal .taskbox li,
+.reveal .taskbox ul,
+.reveal .taskbox ol,
+.reveal .taskbox strong,
+.reveal .taskbox em,
+.reveal .taskbox small,
+.reveal .taskbox span,
+.reveal .taskbox div {
+  color: #f5f1e8 !important;
+}
+
+/* заголовок задачи */
+.reveal .taskbox h3,
+.reveal .taskbox h4 {
+  margin-top: 0;
+  margin-bottom: 0.45em;
+  color: #ffd67a !important;
+}
+
+/* подсказка */
+.reveal .taskbox .hint {
+  margin-top: 0.8em;
+  font-size: 0.88em;
+  color: #e8dcc0 !important;
+  opacity: 1;
+}
+
+/* формулы */
+.reveal .taskbox .math,
+.reveal .taskbox .MathJax,
+.reveal .taskbox mjx-container {
+  color: #f5f1e8 !important;
+}
+
+/* если MathJax рисует SVG */
+.reveal .taskbox mjx-container svg {
+  fill: currentColor !important;
+}
+
+/* номер задачи */
+.reveal .taskbox .tasknum {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #ffd67a !important;
+}
+
+.reveal .slides section {
+  text-align: left !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.reveal .slides section > * {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal p,
+.reveal ul,
+.reveal ol,
+.reveal li {
+  text-align: left !important;
+}
+
+/* temporary debug background */
+/* debug: границы области слайда */
+/*:root {
+  --r-background-color: #00ff00;
+}
+.reveal .slides section {
+  outline: 2px dashed red !important;
+  outline-offset: 0 !important;
+}
+*/

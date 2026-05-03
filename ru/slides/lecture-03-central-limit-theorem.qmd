@@ -1,0 +1,1050 @@
+---
+title: "Лекция 3. Центральная предельная теорема"
+subtitle: "Статистический анализ данных"
+author: "Дмитрий В. Наумов (ОИЯИ)"
+jupyter: python3
+format:
+  revealjs:
+    theme: black
+    width: 1024
+    height: 768
+    slide-number: true
+    preview-links: auto
+    chalkboard:
+      buttons: false
+    logo: shared/figures/dvnlogo.png
+    css: styles.css
+    transition: fade
+    center: true
+    
+---
+## Генератор псевдослучайных чисел
+::: incremental
+- В конце первой лекции мы подбирали $\sigma$ для лучшего описания псевдоданных.
+- Но как мы получили псевдоданные?
+- Для генерации псевдослучайных чисел используются алгоритмы, которые выдают последовательность чисел, статистически похожих на случайные.
+- Такие алгоритмы называются генераторами псевдослучайных чисел.
+- Достаточно иметь генератор равномерного распределения $X\sim U(-1,1)$, чтобы построить генераторы для других распределений.
+:::
+
+## Генерация и визуализация псевдослучайных чисел
+
+```{python}
+#| echo: false
+#| eval: true
+#| include: false
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from IPython.display import HTML
+from statistics import NormalDist
+
+rng = np.random.default_rng(7)
+x = rng.uniform(-1, 1, size=20_000)
+preview = pd.DataFrame({
+    "i": np.arange(1, 101),
+    "x": x[:100],
+})
+```
+
+::: {.panel-tabset}
+
+### Код
+
+::: {.smaller}
+```{python}
+#| echo: true
+#| eval: false
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+rng = np.random.default_rng(7)
+x = rng.uniform(-1, 1, size=20_000)
+preview = pd.DataFrame({"i": np.arange(1, 101), "x": x[:100]})
+```
+
+- `default_rng(7)` создаёт воспроизводимый генератор.
+- `uniform(-1,1,size=20_000)` даёт выборку из равномерного распределения.
+- `preview` сохраняет первые 100 значений для просмотра.
+:::
+
+### Данные
+
+Первые 100 значений выборки:
+
+```{python}
+#| echo: false
+#| eval: true
+HTML(
+    '<div class="table-scroll">'
+    + preview.style.hide(axis="index").format({"i": "{:.0f}", "x": "{:.3f}"}).to_html()
+    + "</div>"
+)
+```
+
+
+### График
+
+::: {.smaller}
+```{python}
+#| echo: false
+#| eval: true
+#| fig-width: 5.2
+#| fig-height: 2.55
+#| out-width: 72%
+fig, ax = plt.subplots()
+ax.hist(x, bins=50, range=(-1.3, 1.3), density=True, color="#4ea1ff", alpha=0.75, edgecolor="white")
+ax.hlines(0.5, -1, 1, color="#ffb347", linewidth=2.4, label=r"$f(x)=1/2$")
+ax.set_xlim(-1.3, 1.3)
+ax.set_ylim(0, 0.7)
+ax.set_xlabel("x")
+ax.set_ylabel("density")
+ax.grid(axis="y", alpha=0.25)
+ax.legend(framealpha=1.0, edgecolor="black")
+plt.show()
+```
+
+:::
+
+:::
+
+## Центральная предельная теорема
+
+::: incremental
+- Рассмотрим случайную величину
+$$
+S_m=X_1+\dots+X_m.
+$$
+
+- Вопрос: каким становится распределение $S_m$, если $m\to \infty$?
+- Для примера возьмём независимые $X_i\sim U(-1,1)$.
+- У каждой величины: 
+$$
+\begin{aligned}
+\mathbb{E}[X_i]&=0,\\ 
+\mathrm{Var}(X_i)&=1/3.
+\end{aligned}
+$$
+- Короткий вывод:
+$$
+\mathbb{E}[X_i^2]=\int_{-1}^{1} x^2\cdot \frac12\,dx=\frac13,
+\qquad
+\mathrm{Var}(X_i)=\mathbb{E}[X_i^2]-\mathbb{E}[X_i]^2=\frac13.
+$$
+:::
+
+## Среднее суммы
+
+::: incremental
+- Определение среднего:
+$$
+\mathbb{E}[S_m]
+=\mathbb{E}\!\left[\sum_{i=1}^m X_i\right]=\sum_{i=1}^m\mathbb{E}[X_i].
+$$
+- Если $X_i\sim U(-1,1)$, то
+$$
+\boxed{\mathbb{E}[S_m]=0.}
+$$
+:::
+
+## Дисперсия суммы
+
+::: {.fragment}
+По определению,
+$$
+\mathrm{Var}(S_m)=\mathbb{E}\!\left[(S_m-\mathbb{E}[S_m])^2\right].
+$$
+:::
+
+::: {.fragment}
+$$
+\mathrm{Var}(S_m)
+=\mathbb{E}\!\left[\left(\sum_{i=1}^m (X_i-\mathbb{E}[X_i])\right)^2\right].
+$$
+:::
+
+::: {.fragment}
+$$
+\mathrm{Var}(S_m)
+=\sum_{i=1}^m \mathbb{E}\!\left[(X_i-\mathbb{E}[X_i])^2\right]
++2\sum_{i<j}\mathbb{E}\!\left[(X_i-\mathbb{E}[X_i])(X_j-\mathbb{E}[X_j])\right].
+$$
+:::
+
+::: {.fragment}
+Смешанные члены подсказывают новое понятие: ковариацию
+$$
+\boxed{
+\mathrm{cov}(X,Y)=\mathbb{E}\!\left[(X-\mathbb{E}[X])(Y-\mathbb{E}[Y])\right]
+=\mathbb{E}[XY]-\mathbb{E}[X]\mathbb{E}[Y].}
+$$
+В частности, $\mathrm{Var}(X)=\mathrm{cov}(X,X)$.
+:::
+
+## Завершение вычисления
+
+::: {.fragment}
+Теперь формула принимает вид
+$$
+\mathrm{Var}(S_m)
+=\sum_{i=1}^m\mathrm{Var}(X_i)
++2\sum_{i<j}\mathrm{cov}(X_i,X_j).
+$$
+:::
+
+::: {.fragment}
+Для независимых величин ковариации равны нулю:
+$$
+\mathrm{Var}(S_m)=\sum_{i=1}^m\mathrm{Var}(X_i).
+$$
+:::
+
+::: {.fragment}
+Если $X_i\sim U(-1,1)$, то
+$$
+\boxed{\mathrm{Var}(S_m)=m/3.}
+$$
+:::
+
+## Формулировка ЦПТ
+
+::: {.callout-important .thmbox appearance="simple"}
+## Теорема
+
+Если $X_1,\dots,X_m$ независимы и имеют конечные дисперсии, то нормированная сумма
+$$
+Z_m=\frac{S_m-\mathbb{E}[S_m]}{\sqrt{\mathrm{Var}(S_m)}}
+$$
+при большом $m$ стремится к нормальному распределению $\mathrm{N}(0,1)$.
+:::
+
+## ЦПТ для равномерных величин
+
+Для $X_i\sim U(-1,1)$:
+$$
+Z_m=\frac{X_1+\dots+X_m}{\sqrt{m/3}}.
+$$
+
+::: incremental
+- При $m=1$ распределение ещё равномерное.
+- При росте $m$ форма быстро становится похожей на гауссову.
+:::
+
+## ЦПТ: $m=1$
+
+![](shared/figures/generated/clt_uniform_sum_m1.png){width=72% .nostretch}
+
+## ЦПТ: $m=2$
+
+![](shared/figures/generated/clt_uniform_sum_m2.png){width=72% .nostretch}
+
+## ЦПТ: $m=5$
+
+![](shared/figures/generated/clt_uniform_sum_m5.png){width=72% .nostretch}
+
+## ЦПТ: $m=10$
+
+![](shared/figures/generated/clt_uniform_sum_m10.png){width=72% .nostretch}
+
+## Интерактив: ЦПТ
+
+::: {.clt-widget}
+```{ojs}
+//| echo: false
+
+viewof m = Inputs.range([1, 50], {
+  value: 5,
+  step: 1,
+  label: "m"
+})
+
+viewof sampleSize = Inputs.range([100, 30000], {
+  value: 12000,
+  step: 1000,
+  label: "N"
+})
+
+viewof regenerate = Inputs.button("Новая статистика")
+
+zValues = {
+  regenerate;
+  const scale = Math.sqrt(m / 3);
+  const values = new Array(sampleSize);
+
+  for (let i = 0; i < sampleSize; ++i) {
+    let sum = 0;
+    for (let j = 0; j < m; ++j) {
+      sum += 2 * Math.random() - 1;
+    }
+    values[i] = sum / scale;
+  }
+
+  return values;
+}
+
+histogram = (values, bins, min, max) => {
+  const width = (max - min) / bins;
+  const counts = Array(bins).fill(0);
+
+  for (const value of values) {
+    if (value < min || value >= max) continue;
+    counts[Math.floor((value - min) / width)] += 1;
+  }
+
+  return counts.map((count, i) => ({
+    x0: min + i * width,
+    x1: min + (i + 1) * width,
+    density: count / (values.length * width)
+  }));
+}
+
+hist = histogram(zValues, 64, -4, 4)
+
+normalCurve = Array.from({length: 401}, (_, i) => {
+  const z = -4 + 8 * i / 400;
+  return {
+    z,
+    density: Math.exp(-0.5 * z * z) / Math.sqrt(2 * Math.PI)
+  };
+})
+
+zMean = zValues.reduce((sum, value) => sum + value, 0) / zValues.length
+
+zVariance = zValues.reduce(
+  (sum, value) => sum + (value - zMean) ** 2,
+  0
+) / zValues.length
+
+cltPlot = Plot.plot({
+  width: 760,
+  height: 380,
+  marginLeft: 55,
+  x: {label: "z", domain: [-4, 4]},
+  y: {label: "density", domain: [0, 0.55]},
+  grid: true,
+  marks: [
+    Plot.rectY(hist, {
+      x1: "x0",
+      x2: "x1",
+      y: "density",
+      fill: "#4ea1ff",
+      fillOpacity: 0.70,
+      stroke: "white"
+    }),
+    Plot.line(normalCurve, {
+      x: "z",
+      y: "density",
+      stroke: "#ffb347",
+      strokeWidth: 2.8
+    })
+  ]
+})
+
+html`
+<div class="clt-panel">
+  ${cltPlot}
+  <div class="clt-summary">
+    <span>z = (X1 + ... + Xm)/sqrt(m/3)</span>
+    <span>m = ${m}</span>
+    <span>mean = ${zMean.toFixed(3)}</span>
+    <span>variance = ${zVariance.toFixed(3)}</span>
+  </div>
+</div>
+`
+```
+:::
+
+
+## Почему гаусс так важен
+
+::: incremental
+- Потому, что наблюдаемая величина часто есть сумма многих малых вкладов.
+- ЦПТ объясняет, почему такая сумма естественно становится почти нормальной.
+- Поэтому гауссово распределение лежит в основе ошибок измерения, доверительных интервалов, штрафных слагаемых и объединения результатов.
+- Полное доказательство ЦПТ мы опустим; для курса важнее уверенно пользоваться его следствиями.
+:::
+
+## В этой лекции: одномерный гаусс
+
+::: incremental
+- Как устроена плотность $\mathrm{N}(\mu,\sigma)$.
+- Как читать вероятности, квантили и интервалы в единицах $\sigma$.
+- Как сравнивать и усреднять независимые измерения.
+- Как переносить ошибку через функцию.
+- Многомерный гаусс и корреляции подробно разберём в следующей лекции.
+:::
+
+## Одномерное гауссовое распределение
+
+::: {.columns}
+
+::: {.column width="52%"}
+
+$$
+f(x;\mu,\sigma)=
+\frac{1}{\sigma\sqrt{2\pi}}
+\exp\!\left[
+-\frac{(x-\mu)^2}{2\sigma^2}
+\right]
+$$
+
+::: incremental
+- $\mu$ задаёт центр распределения
+- $\sigma$ задаёт характерную ширину
+- Дисперсия равна $\sigma^2$
+- Нормировка: $\int_{-\infty}^{+\infty} f(x;\mu,\sigma)\,dx = 1$
+:::
+
+:::
+
+::: {.column width="46%"}
+
+```{python}
+#| echo: false
+#| eval: true
+#| fig-width: 5.2
+#| out-width: "100%"
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+mu = 0.0
+sigma = 1.0
+
+x = np.linspace(mu - 5*sigma, mu + 5*sigma, 600)
+
+f = 1/(sigma*np.sqrt(2*np.pi)) * np.exp(
+    -(x - mu)**2/(2*sigma**2)
+)
+
+plt.plot(x, f)
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.title(rf"Gaussian distribution: $\mu={mu}$, $\sigma={sigma}$")
+plt.grid(True, alpha=0.3)
+plt.show()
+```
+
+:::
+
+:::
+
+## Стандартное нормальное распределение
+
+Если
+$$
+X\sim \mathrm{N}(\mu,\sigma),
+$$
+то после замены
+$$
+Z=\frac{X-\mu}{\sigma}
+$$
+получаем стандартное нормальное распределение
+$$
+\boxed{
+Z\sim \mathrm{N}(0,1)= \frac{1}{\sqrt{2\pi}}e^{-z^2/2}.}
+$$
+
+## Квантили стандартного нормального распределения
+- Во второй лекции мы ввели кумулятивную функцию распределения:
+$$
+\begin{aligned}
+\Phi(z)=P(Z\le z)&=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{z}e^{-t^2/2}\,dt
+=\\
+&=\frac12\left[1+\operatorname{erf}\!\left(\frac{z}{\sqrt2}\right)\right].
+\end{aligned}
+$$
+
+## Квантили стандартного нормального распределения
+
+```{python}
+#| echo: false
+#| eval: true
+#| include: false
+dist_std = NormalDist()
+alpha_levels = np.array([0.90, 0.95, 0.975, 0.995])
+z_levels = np.array([dist_std.inv_cdf(float(a)) for a in alpha_levels])
+z_grid = np.linspace(-3.4, 3.4, 500)
+phi_grid = np.array([dist_std.cdf(float(z)) for z in z_grid])
+```
+
+::: {.columns}
+
+::: {.column width="52%"}
+- Квантиль уровня $\alpha$ для $Z\sim \mathrm{N}(0,1)$ — это число $z_\alpha$, такое что    
+$$  
+\Phi(z_\alpha)=\alpha.          
+$$
+- Смысл:
+$$
+P(-\infty < Z \le z_\alpha) = \alpha
+$$
+
+<small>
+
+| Уровень $\alpha$ | $z_\alpha$ |
+|---:|---:|
+| 0.90 | 1.282 |
+| 0.95 | 1.645 |
+| 0.975 | 1.960 |
+| 0.995 | 2.576 |
+
+</small>
+:::
+
+::: {.column width="48%"}
+```{python}
+#| echo: false
+#| eval: true
+#| fig-width: 4.8
+#| fig-height: 3.5
+#| out-width: 100%
+fig, ax = plt.subplots()
+ax.plot(z_grid, phi_grid, color="#4ea1ff", linewidth=2.5)
+
+line_colors = ["#9be564", "#ffd54f", "#ffb347", "#ff8a65"]
+
+for alpha, z_alpha, color in zip(alpha_levels, z_levels, line_colors):
+    ax.hlines(alpha, -3.4, z_alpha, color=color, linestyle="--", linewidth=1.8)
+    ax.vlines(z_alpha, 0, alpha, color=color, linestyle=":", linewidth=1.8)
+    ax.plot([z_alpha], [alpha], "o", color=color, markersize=4.5)
+
+ax.set_xlim(-3.4, 3.4)
+ax.set_ylim(0, 1.02)
+ax.set_xlabel("z")
+ax.set_ylabel(r"$\Phi(z)$")
+ax.grid(alpha=0.25)
+plt.show()
+```
+:::
+
+:::
+
+## Центральные интервалы
+
+```{python}
+#| echo: false
+#| eval: true
+#| include: false
+dist_q = NormalDist()
+z_q = np.linspace(-4.0, 4.0, 800)
+y_q = np.exp(-0.5 * z_q**2) / np.sqrt(2 * np.pi)
+peak_q = 1 / np.sqrt(2 * np.pi)
+y1_q = peak_q * np.exp(-0.5)
+y2_q = peak_q * np.exp(-2.0)
+p1_q = dist_q.cdf(1.0) - dist_q.cdf(-1.0)
+p2_q = dist_q.cdf(2.0) - dist_q.cdf(-2.0)
+p3_q = dist_q.cdf(3.0) - dist_q.cdf(-3.0)
+```
+
+::: {.panel-tabset}
+
+### Код
+
+::: {.smaller}
+```{python}
+#| echo: true
+#| eval: false
+from statistics import NormalDist
+import numpy as np
+
+dist = NormalDist()
+z = np.linspace(-4, 4, 800)
+f = np.exp(-z**2 / 2) / np.sqrt(2 * np.pi)
+p1 = dist.cdf(1) - dist.cdf(-1)
+p2 = dist.cdf(2) - dist.cdf(-2)
+p3 = dist.cdf(3) - dist.cdf(-3)
+```
+
+- `p1`, `p2`, `p3` дают вероятности попадания в интервалы `[-1,1]`, `[-2,2]`, `[-3,3]`.
+- Для стандартной нормали это и есть центральные интервалы `1σ`, `2σ`, `3σ`.
+- На графике они сопоставлены с шириной гауссовой кривой для `1σ`, `2σ`, `3σ`.
+:::
+
+### График
+
+```{python}
+#| echo: false
+#| eval: true
+#| fig-width: 6.1
+#| fig-height: 4.0
+#| out-width: 86%
+fig, ax = plt.subplots(facecolor="white")
+ax.set_facecolor("white")
+ax.plot(z_q, y_q, color="#294cff", linewidth=2.6)
+
+for z_mark in [-3, -2, -1, 1, 2, 3]:
+    y_mark = peak_q * np.exp(-0.5 * z_mark**2)
+    ax.vlines(z_mark, 0, y_mark, color="black", linestyle=":", linewidth=1.1)
+
+ax.hlines(peak_q, 0.18, 0.95, color="black", linestyle=":", linewidth=1.1)
+ax.hlines(y1_q, 1.10, 2.00, color="black", linestyle=":", linewidth=1.1)
+ax.hlines(y2_q, 2.05, 2.95, color="black", linestyle=":", linewidth=1.1)
+
+ax.text(1.10, peak_q + 0.006, r"$P_0$", fontsize=14)
+ax.text(2.08, y1_q + 0.004, r"$P_0 e^{-1/2}$", fontsize=13)
+ax.text(2.98, y2_q + 0.002, r"$P_0 e^{-2}$", fontsize=13, ha="right")
+
+ax.annotate(
+    "",
+    xy=(1.0, 0.205),
+    xytext=(-1.0, 0.205),
+    arrowprops=dict(arrowstyle="<->", color="black", linewidth=1.4),
+)
+ax.text(0.0, 0.217, r"$\pm1\sigma$", ha="center", fontsize=14)
+
+ax.annotate(
+    "",
+    xy=(2.0, 0.055),
+    xytext=(-2.0, 0.055),
+    arrowprops=dict(arrowstyle="<->", color="black", linewidth=1.4),
+)
+ax.text(0.0, 0.068, r"$\pm2\sigma$", ha="center", fontsize=14)
+
+ax.annotate(
+    "",
+    xy=(3.0, 0.018),
+    xytext=(-3.0, 0.018),
+    arrowprops=dict(arrowstyle="<->", color="black", linewidth=1.4),
+)
+ax.text(0.0, 0.031, r"$\pm3\sigma$", ha="center", fontsize=14)
+
+interval_text = (
+    rf"{100 * p1_q:.1f}% : $|x-\mu| < 1\sigma$" "\n"
+    rf"{100 * p2_q:.1f}% : $|x-\mu| < 2\sigma$" "\n"
+    rf"{100 * p3_q:.1f}% : $|x-\mu| < 3\sigma$"
+)
+ax.text(
+    1.75,
+    0.265,
+    interval_text,
+    fontsize=12.5,
+    va="top",
+    bbox=dict(facecolor="white", edgecolor="#ffb347", linewidth=1.4, boxstyle="round,pad=0.35"),
+)
+
+ax.set_xlim(-4, 4)
+ax.set_ylim(0, 0.5)
+ax.set_xlabel(r"$(x-\mu)/\sigma$", fontsize=15)
+ax.set_ylabel(r"$\mathrm{Prob}(x;\mu,\sigma)$", fontsize=15)
+ax.set_xticks(np.arange(-4, 5, 1))
+ax.tick_params(axis="both", which="major", direction="in", top=True, right=True, length=7, width=1.0, labelsize=12)
+ax.minorticks_on()
+ax.tick_params(axis="both", which="minor", direction="in", top=True, right=True, length=4, width=0.9)
+for spine in ax.spines.values():
+    spine.set_linewidth(1.2)
+plt.show()
+```
+
+:::
+
+## Совместимость двух измерений
+
+Пусть $x_1\pm \sigma_1,\qquad x_2\pm \sigma_2$
+
+независимо измеряют одну и ту же величину $\mu$.
+
+Проверяем разность $D=X_1-X_2.$
+
+Если измерения совместимы, то $D$ должна быть статистически совместима с нулём:
+
+$$
+\boxed{
+z_{\rm obs}
+=
+\frac{x_1-x_2}{\sqrt{\sigma_1^2+\sigma_2^2}}
+}
+$$
+
+::: incremental
+- Задаём уровень значимости $\alpha$.
+- Для двусторонней проверки:
+  $$
+  |z_{\rm obs}|\le z_{1-\alpha/2}
+  $$
+  означает, что гипотеза совместимости не отвергается.
+- Если
+  $$
+  |z_{\rm obs}|>z_{1-\alpha/2},
+  $$
+  измерения несовместимы на уровне значимости $\alpha$.
+:::
+
+## Совместимость: важна не разность, а значимость
+
+Два результата могут выглядеть разными, но быть совместимыми:
+
+$$
+1.0\pm0.5,
+\qquad
+2.0\pm0.5.
+$$
+
+$$
+z_{\rm obs}
+=
+\frac{1.0-2.0}{\sqrt{0.5^2+0.5^2}}
+=
+-1.41.
+$$
+
+Для $90\%$-ной области совместимости
+
+$$
+\alpha=0.10,
+\qquad
+z_{1-\alpha/2}=z_{0.95}=1.64.
+$$
+
+Поскольку
+
+$$
+|z_{\rm obs}|=1.41<1.64,
+$$
+
+гипотеза совместимости **не отвергается**.
+
+---
+
+Два результата могут выглядеть близкими, но быть несовместимыми:
+
+$$
+1.010\pm0.001,
+\qquad
+1.020\pm0.001.
+$$
+
+$$
+z_{\rm obs}
+=
+\frac{1.010-1.020}{\sqrt{0.001^2+0.001^2}}
+=
+-7.07.
+$$
+
+Поскольку
+
+$$
+|z_{\rm obs}|=7.07>3,
+$$
+
+измерения **несовместимы на уровне $3\sigma$**.
+
+## Вывод: совместимость двух измерений
+
+$$
+D=X_1-X_2.
+$$
+
+Если оба измерения оценивают одну величину $\mu$, то
+
+$$
+\mathbb{E}[D]
+=
+\mathbb{E}[X_1-X_2]
+=
+\mu-\mu
+=
+0.
+$$
+
+Дисперсия разности:
+
+$$
+\mathrm{Var}(D)
+=
+\mathrm{Var}(X_1-X_2)
+=
+\sigma_1^2+\sigma_2^2
+-
+2\,\mathrm{cov}(X_1,X_2).
+$$
+
+Для независимых измерений
+
+$$
+\mathrm{cov}(X_1,X_2)=0,
+\qquad
+\sigma_D^2=\sigma_1^2+\sigma_2^2.
+$$
+
+Если ошибки гауссовы, то
+
+$$
+z=
+\frac{D}{\sigma_D}
+=
+\frac{D}{\sqrt{\sigma_1^2+\sigma_2^2}}
+\sim \mathrm{N}(0,1).
+$$
+
+Поэтому совместимость проверяется сравнением $|z_{\rm obs}|$ с критическим значением $z_{1-\alpha/2}$.
+
+## Вывод: совместимость двух измерений
+
+$$
+\mathbb{E}[D]=\mathbb{E}[X_1-X_2]=\mu-\mu=0.
+$$
+
+Далее
+$$
+\mathrm{Var}(D)=\mathrm{Var}(X_1-X_2)
+=\sigma_1^2+\sigma_2^2-2\,\mathrm{cov}(X_1,X_2).
+$$
+
+Для независимых измерений $\mathrm{cov}(X_1,X_2)=0$, поэтому
+$$
+\mathrm{Var}(D)=\sigma_1^2+\sigma_2^2.
+$$
+
+Линейная комбинация независимых гауссовых величин снова гауссова, значит
+$$
+D\sim \mathrm{N}(0,\sigma_1^2+\sigma_2^2),
+\qquad
+z=\frac{D}{\sqrt{\sigma_1^2+\sigma_2^2}}\sim \mathrm{N}(0,1).
+$$
+
+## Усреднение одинаково точных измерений
+
+Если цель уже не сравнить измерения, а оценить общую величину $\mu$, то естественно взять среднее:
+$$
+\bar X=\frac{1}{n}\sum_{i=1}^n X_i.
+$$
+
+Для независимых
+$$
+X_1,\dots,X_n\sim \mathrm{N}(\mu,\sigma)
+$$
+получаем
+$$
+\boxed{
+\mathbb{E}[\bar X]=\mu,
+\qquad
+\sigma_{\bar X}=\frac{\sigma}{\sqrt{n}}.
+}
+$$
+
+## Вывод: ошибка среднего
+
+$$
+\mathbb{E}[\bar X]
+=\mathbb{E}\!\left[\frac{1}{n}\sum_{i=1}^n X_i\right]
+=\frac{1}{n}\sum_{i=1}^n\mathbb{E}[X_i]
+=\mu.
+$$
+
+И
+$$
+\mathrm{Var}(\bar X)
+=\mathrm{Var}\!\left(\frac{1}{n}\sum_{i=1}^n X_i\right)
+=\frac{1}{n^2}\sum_{i=1}^n\mathrm{Var}(X_i)
+=\frac{n\sigma^2}{n^2}
+=\frac{\sigma^2}{n}.
+$$
+
+Значит,
+$$
+\sigma_{\bar X}=\sqrt{\mathrm{Var}(\bar X)}=\frac{\sigma}{\sqrt{n}}.
+$$
+
+## Усреднение с разными ошибками
+
+Если ошибки различны, то более точное измерение должно иметь больший вес.
+
+Итоговая формула:
+$$
+\boxed{
+\hat\mu=\frac{\sum_i w_i x_i}{\sum_i w_i},
+\qquad
+w_i=\frac{1}{\sigma_i^2},
+\qquad
+\sigma_{\hat\mu}=\frac{1}{\sqrt{\sum_i w_i}}.
+}
+$$
+
+## Вывод: взвешенное среднее
+
+Естественно минимизировать
+$$
+\chi^2(\mu)=\sum_{i=1}^n \frac{(x_i-\mu)^2}{\sigma_i^2}.
+$$
+
+Условие минимума:
+$$
+\frac{d\chi^2}{d\mu}
+=-2\sum_{i=1}^n \frac{x_i-\mu}{\sigma_i^2}=0.
+$$
+
+Отсюда
+$$
+\hat\mu=\frac{\sum_i x_i/\sigma_i^2}{\sum_i 1/\sigma_i^2}
+=\frac{\sum_i w_i x_i}{\sum_i w_i}.
+$$
+
+Теперь положим
+$$
+a_i=\frac{w_i}{\sum_j w_j},
+\qquad
+\hat\mu=\sum_i a_i X_i.
+$$
+
+Для независимых измерений
+$$
+\mathrm{Var}(\hat\mu)
+=\sum_i a_i^2\sigma_i^2
+=\sum_i \frac{w_i^2\sigma_i^2}{\left(\sum_j w_j\right)^2}
+=\sum_i \frac{w_i}{\left(\sum_j w_j\right)^2}
+=\frac{1}{\sum_i w_i}.
+$$
+
+## Линейное распространение ошибок
+
+Пусть
+$$
+Y=f(X),
+\qquad
+X\sim \mathrm{N}(\mu_X,\sigma_X),
+$$
+и $\sigma_X$ достаточно мало.
+
+Тогда
+$$
+\boxed{\sigma_Y\approx |f'(\mu_X)|\,\sigma_X.}
+$$
+
+## Вывод: линейное распространение ошибок
+
+Разложим функцию в ряд Тейлора около среднего:
+$$
+f(X)\approx f(\mu_X)+f'(\mu_X)(X-\mu_X).
+$$
+
+Значит,
+$$
+Y-f(\mu_X)\approx f'(\mu_X)(X-\mu_X).
+$$
+
+Переходя к дисперсиям, получаем
+$$
+\mathrm{Var}(Y)\approx \left(f'(\mu_X)\right)^2\mathrm{Var}(X)
+=\left(f'(\mu_X)\right)^2\sigma_X^2,
+$$
+то есть
+$$
+\sigma_Y\approx |f'(\mu_X)|\,\sigma_X.
+$$
+
+## Быстрые следствия
+
+::: incremental
+- Для $Y=aX+b$: $\sigma_Y=|a|\,\sigma_X$.
+- Для $Y=X^n$: $\dfrac{\sigma_Y}{|Y|}\approx |n|\,\dfrac{\sigma_X}{|X|}$.
+- Для $Y=1/X$: $\dfrac{\sigma_Y}{|Y|}\approx \dfrac{\sigma_X}{|X|}$.
+:::
+
+## Когда ЦПТ работает плохо
+
+::: incremental
+- Один вклад доминирует над суммой.
+- Есть тяжёлые хвосты и редкие очень большие выбросы.
+- Дисперсия бесконечна или плохо определена.
+- В таких случаях гауссова модель может быть плохим приближением.
+:::
+
+## Когда линейная формула плоха
+
+::: incremental
+- Относительная ошибка уже не мала.
+- Функция сильно нелинейна на масштабе $\sigma_X$.
+- Есть физические границы или сильная асимметрия.
+- Тогда лучше использовать точное преобразование распределения или toy Monte Carlo.
+:::
+
+## Что дальше
+
+::: incremental
+- Сегодня нам хватило одномерного гаусса и независимых ошибок.
+- В следующей лекции перейдём к многомерному гауссу, ковариационным матрицам и коррелированным ошибкам.
+:::
+
+
+
+## Задачи
+
+##
+::: {.taskbox}
+### ✍️ <span class="tasknum">Задача 4.</span> Квантили и отклонения в сигмах
+
+Пусть
+$$
+X\sim \mathrm{N}(\mu=12.0,\sigma=0.8).
+$$
+
+Найдите:
+
+1. центральный интервал $68\%$;
+2. центральный интервал $95\%$;
+3. односторонний квантиль уровня $0.95$;
+4. на сколько сигм отклоняется значение $x=13.4$ от среднего.
+
+<div class="hint">
+<strong>Подсказка.</strong> Используйте формулу $x_\alpha=\mu+z_\alpha\sigma$ и определение $z=(x-\mu)/\sigma$.
+</div>
+:::
+
+## 
+
+::: {.taskbox}
+### ✍️ <span class="tasknum">Задача 5.</span> Усреднение независимых измерений
+
+Три независимых измерения одной и той же величины дали:
+$$
+x_1=125.12\pm0.30,\qquad
+x_2=124.86\pm0.18,\qquad
+x_3=125.05\pm0.24.
+$$
+
+Найдите:
+
+1. обычное арифметическое среднее;
+2. взвешенное среднее;
+3. ошибку взвешенного среднего;
+4. какое измерение вносит наибольший вклад и почему;
+5. совместимы ли $x_1$ и $x_2$ на уровне двух сигм.
+
+<div class="hint">
+<strong>Подсказка.</strong> Используйте веса $w_i=1/\sigma_i^2$ и для разности двух измерений формулу $\sigma_d=\sqrt{\sigma_1^2+\sigma_2^2}$.
+</div>
+:::
+
+## 
+
+::: {.taskbox}
+### ✍️ <span class="tasknum">Задача 6.</span> Линейное распространение ошибки
+
+В эксперименте по времени пролёта длина базы известна точно:
+$$
+L=6.00~\text{м}.
+$$
+Время измерено как
+$$
+t=20.0\pm1.0~\text{нс}.
+$$
+
+Скорость оценивается по формуле
+$$
+v=\frac{L}{t}.
+$$
+
+Найдите:
+
+1. оценку скорости $v$;
+2. неопределённость $\sigma_v$ по линейной формуле распространения ошибок;
+3. относительную неопределённость $\sigma_v/v$;
+4. значения $v(t+\sigma_t)$ и $v(t-\sigma_t)$ и прокомментируйте, насколько хороша линейная аппроксимация.
+
+<div class="hint">
+<strong>Подсказка.</strong> Сначала найдите производную $dv/dt$.
+</div>
+:::
