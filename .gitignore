@@ -27,3 +27,16 @@ shared/notebooks/common/*_files
 shared/figures/generated/*
 !shared/figures/generated/.gitkeep
 .DS_Store
+
+# Quarto
+/.quarto/
+/_site/
+/_book/
+*_files/
+
+# Local build/cache
+/.make-tmp/
+.DS_Store
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
