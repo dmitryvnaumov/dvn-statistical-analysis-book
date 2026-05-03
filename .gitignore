@@ -40,3 +40,10 @@ shared/figures/generated/*
 .ipynb_checkpoints/
 __pycache__/
 *.pyc
+
+# Local overrides
+Makefile.local
+
+# Python cache
+__pycache__/
+*.pyc
